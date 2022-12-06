@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokedex</title>
+  <link rel="shortcut icon" href="./assets/img/icon.ico" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/loading.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/responsividade.css" />
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <div class="card">
+
+      <img class="header-img" src="./assets/img/dex.png" />
+
+      <select class="selectPoke" id="selectPokemon">
+        <option value="bulbasaur">Option1</option>
+      </select>
+
+      <form class="searchPoke">
+        <input id="searchInput" type="text" placeholder="Buscar pokémon" autocomplete="off">
+        <div class="noResult">
+          Pokémon não encontrado :(
+        </div>
+        </input>
+        <button id="submit" type="submit" click="buscaPoke">Ok</button>
+      </form>
+
+      <!-- Imagem dispositivos maiores -->
+      <img id="foto" class="pokeImageCard" />
+      <div class="fundo"></div>
+
+      <!-- Imagem Mobile -->
+      <div class="pokeImageMobile">
+        <div class="circleMobile"></div>
+        <img id="fotoMobile" />
+      </div>
+
+      <!-- Nome & Tipo -->
+      <div class="type">
+        <h1 id="num_nome">#25 - Pokemon</h1>
+        <span id="tipo">Tipo</span>
+      </div>
+
+      <!-- Caracteristicas -->
+      <div class="features">
+        <span>Altura:
+          <p id="altura">-</p>
+        </span>
+        <span>Peso:
+          <p id="peso">-</p>
+        </span>
+        <span>Espécie:
+          <p id="especie">-</p>
+        </span>
+        <span>Habilidade:
+          <p id="habilidade">-</p>
+        </span>
+      </div>
+
+      <!-- Descriçao -->
+      <div id="desc" class="description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sapiente rerum vero, quo nostrum, dolores, quaerat a qui officia necessitatibus quibusdam consectetur autem tempora sint illum deserunt adipisci. Architecto, exercitationem. Deserunt!</div>
+
+      <!-- Status -->
+      <div class="stats">
+        <div class="stats-graph">
+          <span class="stats-label-smallDevices">HP</span>
+          <progress id="hp" value="255" max="255"></progress>
+
+          <span class="stats-label-smallDevices">ATAQUE</span>
+          <progress id="ataque" value="160" max="160"></progress>
+
+          <span class="stats-label-smallDevices">DEFESA</span>
+          <progress id="defesa" value="230" max="230"></progress>
+
+          <span class="stats-label-smallDevices">ATAQUE ESPECIAL</span>
+          <progress id="ataqueE" value="154" max="154"></progress>
+
+          <span class="stats-label-smallDevices">DEFESA ESPECIAL</span>
+          <progress id="defesaE" value="230" max="230"></progress>
+
+          <span class="stats-label-smallDevices">VELOCIDADE</span>
+          <progress id="velocidade" value="160" max="160"></progress>
+        </div>
+        <div class="stats-label">
+          <span>HP</span>
+          <span>ATAQUE</span>
+          <span>DEFESA</span>
+          <span>ATAQUE<br />ESPECIAL</span>
+          <span>DEFESA<br />ESPECIAL</span>
+          <span>VELOCIDADE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading">
+    <div class="loading-position">
+      <img class="pokeball" src="./assets/img/pokeball.png" />
+    </div>
+  </div>
+
+  <script type="module" src="./assets/js/script.js"></script>
+</body>
+
+</html>

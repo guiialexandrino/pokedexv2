@@ -1,0 +1,143 @@
+.stats-label-smallDevices {
+  display: none;
+}
+
+.circleMobile {
+  position: none;
+  background-color: var(--mainColor);
+  opacity: 0.3;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.pokeImageMobile {
+  display: none;
+}
+
+.pokeImageMobile > img {
+  width: 400px;
+}
+
+@media (max-width: 1100px) {
+  .stats-label {
+    margin-top: 5vw;
+  }
+}
+
+@media (max-width: 960px) {
+  .features {
+    display: block;
+    width: 100%;
+  }
+
+  .features > span {
+    margin: 0px;
+  }
+
+  .description {
+    margin: 0px;
+    padding: 20px 0px 10px 0px;
+  }
+
+  .stats {
+    margin-top: 30px;
+  }
+
+  .stats-graph {
+    display: block;
+    flex-wrap: none;
+  }
+
+  progress {
+    width: 100%;
+    height: 55px;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    margin-bottom: 10px;
+  }
+
+  .progress-star::after {
+    bottom: 122%;
+    left: 92%;
+  }
+
+  @keyframes movement {
+    0% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-3px) rotate(0deg);
+    }
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+  }
+
+  .stats-label {
+    display: none;
+  }
+
+  .stats-label-smallDevices {
+    display: block;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .type {
+    justify-content: center;
+    width: 100%;
+    padding-left: 0px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    line-height: 3rem;
+    /* padding-top: 150px; */
+  }
+
+  .pokeImageCard {
+    display: none;
+  }
+
+  .pokeImageMobile {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .fundo {
+    display: none;
+  }
+
+  .circleMobile {
+    position: absolute;
+  }
+
+  progress:hover::before {
+    right: 0;
+    left: 44%;
+  }
+}
+
+@media (max-width: 600px) {
+  .circleMobile {
+    width: 95%;
+    height: 95%;
+  }
+
+  .selectPoke {
+    top: 15px;
+    left: 28%;
+  }
+
+  .searchPoke {
+    left: 0px;
+  }
+
+  .card {
+    padding-top: 65px;
+  }
+}
