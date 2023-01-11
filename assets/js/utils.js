@@ -2,9 +2,9 @@ function retornaTipos(array) {
   let html = '';
   array.forEach((item) => {
     html += `<span style="color: ${mudaCorTexto(
-      item,
+      item
     )}; background-color: ${retornaCodigoCorDoTipo(
-      item,
+      item
     )} !important">${traduzNomeTipo(item)}</span>`;
   });
   return html;
@@ -75,4 +75,50 @@ function retornaHabilidades(array) {
   return html;
 }
 
-export default { retornaTipos, retornaCodigoCorDoTipo, retornaHabilidades };
+function retornaMiniCards(array) {
+  let html = '';
+  let idPoke = [];
+
+  array.forEach((item, index) => {
+    let tipos = item.types.map((poke) => {
+      return poke.type.name;
+    });
+
+    idPoke.push({ name: item.name, type: tipos[0] });
+
+    let cor = retornaCodigoCorDoTipo(tipos[0]);
+    let fixColor = cor.split(',');
+    fixColor[fixColor.length - 1] = ' 0.2)';
+    const finalColor = fixColor.join(',');
+
+    html += `
+    <div id="${item.name}" class="miniCardPoke">
+    <div class="outlinedEffect"></div>
+    <div class="miniImgCard">
+    <h3>#${index + 1}</h3>
+    <div class="img-miniImg" style="background-image: url(${
+      item.sprites.other['official-artwork'].front_default
+    })"></div>
+
+    </div>
+    <div id="${
+      item.name
+    }-info" class="infoPokeMiniCard" style="background-color: ${finalColor}">
+    <h2>
+    ${item.name[0].toUpperCase() + item.name.substring(1)}</h2>
+    <div>
+    ${retornaTipos(tipos)} 
+    </div>
+    </div>
+    </div>
+    `;
+  });
+  return { html, idPoke };
+}
+
+export default {
+  retornaTipos,
+  retornaCodigoCorDoTipo,
+  retornaHabilidades,
+  retornaMiniCards,
+};
