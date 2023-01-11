@@ -3,10 +3,10 @@ import Utils from './utils.js';
 
 /* Variaveis Globais */
 
-let pokes = [];
+let __pokes = [];
 let __selectedPoke = {};
 let __pokedex = [];
-const __pokedexNumber = 151;
+const __pokedexNumber = 386;
 let __dialogInfo = false;
 let __clickPosition = {};
 
@@ -92,23 +92,7 @@ async function getPokedex() {
     });
 
     card.addEventListener('click', (e) => {
-      __selectedPoke = { ...poke, id: index };
-      if (e.view.outerWidth <= 1000) {
-        body.style.overflowY = 'scroll';
-        body.style.overflowX = 'hidden';
-        content.style.display = 'none';
-      } else {
-        body.style.overflowY = 'hidden';
-        body.style.overflowX = 'hidden';
-        content.style.display = 'flex';
-      }
-      __dialogInfo = true;
-      console.log(e.offsetY, e.pageY);
-      __clickPosition = { card: card, position: e.pageY - e.offsetY };
-
-      dialogPokeInfo.style.top = `${__clickPosition.position}px`;
-      card.scrollIntoView();
-      handlePoke();
+      showInfoCard(poke, index, card, e);
     });
   });
 }
@@ -128,6 +112,44 @@ async function addExtraInfo(pokedexArray, id) {
         flavor_text_entries: info.flavor_text_entries,
       })
     );
+}
+
+function showInfoCard(poke, index, card, e) {
+  __selectedPoke = { ...poke, id: index };
+  if (e.view.outerWidth <= 1000) {
+    body.style.overflowY = 'scroll';
+    body.style.overflowX = 'hidden';
+    content.style.display = 'none';
+  } else {
+    body.style.overflowY = 'hidden';
+    body.style.overflowX = 'hidden';
+    content.style.display = 'flex';
+  }
+  __dialogInfo = true;
+
+  const clickYAxis = e.pageY; // Posição do eixo Y do Click
+  const differenceClickYAxis = e.offsetY; // diferença entre o click no eixo Y e onde o elemento começa no eixo Y.
+  const scrollingTotal = window.document.documentElement.scrollHeight; // total de scroll da pagina
+  const windowUserNavigatorHeight = window.innerHeight; // altura da janela navegador do usuário
+  const actualScroll = e.view.scrollY; // quanto de scroll atual
+
+  __clickPosition = {
+    card: card,
+    position: clickYAxis - differenceClickYAxis,
+  };
+
+  dialogPokeInfo.style.top = `${__clickPosition.position}px`;
+
+  if (
+    !(__clickPosition.position + windowUserNavigatorHeight <= scrollingTotal)
+  ) {
+    dialogPokeInfo.style.top = `${
+      scrollingTotal - windowUserNavigatorHeight
+    }px`;
+  }
+
+  card.scrollIntoView();
+  handlePoke();
 }
 
 /* Chama Método Inicial para carregar lista de pokes*/
@@ -199,7 +221,7 @@ function buscaPoke() {
   event.preventDefault();
   document.querySelector('.noResult').style.display = 'none';
 
-  const result = pokes.find((pokemon) => {
+  const result = __pokes.find((pokemon) => {
     let name = pokemon.label.split(' ')[2];
     return name.toUpperCase() === input.value.toUpperCase();
   });
