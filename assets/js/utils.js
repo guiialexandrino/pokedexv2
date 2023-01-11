@@ -32,24 +32,24 @@ function traduzNomeTipo(item) {
 }
 
 function retornaCodigoCorDoTipo(item) {
-  if (item == 'electric') return 'rgba(254, 225, 103, 1)';
-  if (item == 'normal') return 'rgba(246, 153, 181, 0.8)';
-  if (item == 'fire') return 'rgba(243, 42, 42, 0.8)';
-  if (item == 'grass') return 'rgba(128, 240, 129, 0.8)';
-  if (item == 'poison') return 'rgba(197, 153, 246, 0.8)';
+  if (item == 'electric') return 'rgba(254, 225, 103, 0.9)';
+  if (item == 'normal') return 'rgba(246, 153, 181, 0.9)';
+  if (item == 'fire') return 'rgba(243, 42, 42, 0.9)';
+  if (item == 'grass') return 'rgba(128, 240, 129, 0.9)';
+  if (item == 'poison') return 'rgba(197, 153, 246, 0.9)';
   if (item == 'water') return 'rgba(0, 183, 211, 0.9)';
-  if (item == 'psychic') return 'rgba(116, 14, 142, 0.8)';
-  if (item == 'fairy') return 'rgba(225, 68, 178, 0.8)';
-  if (item == 'ground') return 'rgba(102, 57, 17, 0.8)';
-  if (item == 'steel') return 'rgba(189, 187, 184, 0.8)';
-  if (item == 'bug') return 'rgba(214, 249, 123, 0.8)';
-  if (item == 'fighting') return 'rgba(186, 173, 146, 0.8)';
-  if (item == 'rock') return 'rgba(67, 66, 65, 0.8)';
-  if (item == 'dragon') return 'rgba(193, 203, 251, 0.8)';
-  if (item == 'flying') return 'rgba(193, 249, 251, 0.8)';
-  if (item == 'ice') return 'rgba(103, 243, 241, 0.8)';
-  if (item == 'ghost') return 'rgba(80, 12, 176, 0.8)';
-  if (item == 'dark') return 'rgba(80, 12, 176, 0.8)';
+  if (item == 'psychic') return 'rgba(116, 14, 142, 0.9)';
+  if (item == 'fairy') return 'rgba(225, 68, 178, 0.9)';
+  if (item == 'ground') return 'rgba(102, 57, 17, 0.9)';
+  if (item == 'steel') return 'rgba(189, 187, 184, 0.9)';
+  if (item == 'bug') return 'rgba(214, 249, 123, 0.9)';
+  if (item == 'fighting') return 'rgba(186, 173, 146, 0.9)';
+  if (item == 'rock') return 'rgba(67, 66, 65, 0.9)';
+  if (item == 'dragon') return 'rgba(193, 203, 251, 0.9)';
+  if (item == 'flying') return 'rgba(193, 249, 251, 0.9)';
+  if (item == 'ice') return 'rgba(103, 243, 241, 0.9)';
+  if (item == 'ghost') return 'rgba(80, 12, 176, 0.9)';
+  if (item == 'dark') return 'rgba(80, 12, 176, 0.9)';
 }
 
 function mudaCorTexto(item) {
@@ -84,21 +84,34 @@ function retornaMiniCards(array) {
       return poke.type.name;
     });
 
+    const habilidadesEncontradas = item.abilities.map((poke) => {
+      return poke.ability.name;
+    });
+
+    // Verifica se o pokemon é voador ou tem levitate
+    let flyPoke = '';
+    if (tipos.includes('flying') || habilidadesEncontradas.includes('levitate'))
+      flyPoke = 'animation: flyingPoke 2s ease-in-out infinite';
+    else flyPoke = '';
+
+    // Salva informação do poke
     idPoke.push({ name: item.name, type: tipos[0] });
 
+    // Gera cor do tipo
     let cor = retornaCodigoCorDoTipo(tipos[0]);
     let fixColor = cor.split(',');
     fixColor[fixColor.length - 1] = ' 0.2)';
     const finalColor = fixColor.join(',');
 
+    // Cria mini card para todos os pokemons
     html += `
     <div id="${item.name}" class="miniCardPoke">
     <div class="outlinedEffect"></div>
-    <div class="miniImgCard">
+    <div class="miniImgCard"">
     <h3>#${index + 1}</h3>
     <div class="img-miniImg" style="background-image: url(${
       item.sprites.other['official-artwork'].front_default
-    })"></div>
+    }); ${flyPoke}"></div>
 
     </div>
     <div id="${

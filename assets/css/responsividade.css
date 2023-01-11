@@ -27,6 +27,14 @@
 }
 
 @media (max-width: 960px) {
+  .fundo_info {
+    display: none;
+  }
+
+  .card {
+    margin-top: 60px;
+  }
+
   .features {
     display: block;
     width: 100%;
@@ -106,10 +114,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .fundo {
-    display: none;
   }
 
   .circleMobile {

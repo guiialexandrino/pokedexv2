@@ -3,19 +3,19 @@ import Utils from './utils.js';
 
 /* Variaveis Globais */
 
-let pokemonToSearch = 1;
 let pokes = [];
+let __selectedPoke = {};
 let __pokedex = [];
-const pokedexNumber = 45;
-let selectedPoke = {};
+const __pokedexNumber = 151;
 let __dialogInfo = false;
-let __clickYPosition = 0;
+let __clickPosition = {};
 
 /* Elementos Reativos da página */
 
 const body = document.querySelector('body');
 const content = document.querySelector('.content');
 const loading = document.querySelector('.show_dialog_loading');
+const closeInfoButton = document.querySelector('#closeInfoButton');
 const dialogPokeInfo = document.querySelector('.show_dialog_info');
 const corDeFundo = (tipoPokemon) => {
   document.documentElement.style.setProperty(
@@ -50,22 +50,13 @@ _defesaPoke.addEventListener('mouseenter', changeStatsInfo);
 _ataqueEspecialPoke.addEventListener('mouseenter', changeStatsInfo);
 _defesaEspecialPoke.addEventListener('mouseenter', changeStatsInfo);
 _velocidadePoke.addEventListener('mouseenter', changeStatsInfo);
-window.addEventListener('resize', (e) => {
-  if (e.currentTarget.innerWidth <= 1000 && __dialogInfo) {
-    body.style.overflowY = 'scroll';
-    body.style.overflowX = 'hidden';
-    content.style.display = 'none';
-  } else if (e.currentTarget.innerWidth > 1000 && __dialogInfo) {
-    body.style.overflowY = 'hidden';
-    body.style.overflowX = 'hidden';
-    content.style.display = 'flex';
-  }
-});
+closeInfoButton.addEventListener('click', handleCloseInfo);
+window.addEventListener('resize', resizeWindow);
 
 /* Métodos iniciais para carregar pokes */
 
 async function getPokedex() {
-  for (let i = 1; i <= pokedexNumber; i++) {
+  for (let i = 1; i <= __pokedexNumber; i++) {
     loading.style.display = 'flex';
     try {
       __pokedex.push(await getGeneralInfoPokes(i));
@@ -101,7 +92,7 @@ async function getPokedex() {
     });
 
     card.addEventListener('click', (e) => {
-      selectedPoke = { ...poke, id: index };
+      __selectedPoke = { ...poke, id: index };
       if (e.view.outerWidth <= 1000) {
         body.style.overflowY = 'scroll';
         body.style.overflowX = 'hidden';
@@ -111,9 +102,12 @@ async function getPokedex() {
         body.style.overflowX = 'hidden';
         content.style.display = 'flex';
       }
-      __dialogInfo = true; // variavel global
-      __clickYPosition = e.pageY;
-      document.documentElement.scrollTop = 0;
+      __dialogInfo = true;
+      console.log(e.offsetY, e.pageY);
+      __clickPosition = { card: card, position: e.pageY - e.offsetY };
+
+      dialogPokeInfo.style.top = `${__clickPosition.position}px`;
+      card.scrollIntoView();
       handlePoke();
     });
   });
@@ -143,8 +137,9 @@ await getPokedex();
 /* Métodos ao clicar no poke para visualizar detalhes */
 
 function handlePoke() {
-  const poke = __pokedex[selectedPoke.id];
+  const poke = __pokedex[__selectedPoke.id];
   loadPokeInfo(poke);
+  //colocar animação no dialog
 }
 
 function loadPokeInfo(pokemon) {
@@ -200,114 +195,6 @@ function loadPokeInfo(pokemon) {
   dialogPokeInfo.style.display = 'flex';
 }
 
-function getPokes() {
-  loading.style.display = 'block';
-  let results = [];
-
-  fetch(`https://pokeapi.co/api/v2/pokemon-species/?limit=386`)
-    .then((data) => {
-      return data.json();
-    })
-    .then((info) => {
-      results = info.results;
-    })
-    .then(() => {
-      for (let x = 0; x < results.length; x++) {
-        pokes.push({
-          value: x + 1,
-          label: `#${x + 1} - ${
-            results[x].name[0].toUpperCase() +
-            results[x].name.substring(1, results[x].name.length)
-          }`,
-        });
-      }
-
-      let selectHtml = '';
-
-      pokes.forEach((poke) => {
-        selectHtml += `<option value="${poke.value}">${poke.label}</option>`;
-      });
-
-      select.innerHTML = selectHtml;
-
-      _maxContentCards.innerHTML = Utils.retornaMiniCards(results);
-    });
-}
-
-function getCaracteristicas() {
-  loading.style.display = 'block';
-
-  fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonToSearch}`)
-    .then((data) => {
-      return data.json();
-    })
-    .then((info) => {
-      //altera info poke selecionado
-
-      _descricaoPoke.innerHTML =
-        info.flavor_text_entries[8].flavor_text.replace(/\n/g, ' ');
-
-      const especie = info.genera.find((item) => {
-        if (item.language.name === 'en') return item.genus;
-      }).genus;
-
-      _especiePoke.innerHTML = especie.split('Pokémon')[0];
-    });
-}
-
-function getInformacoesGerais() {
-  fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonToSearch}`)
-    .then((data) => {
-      return data.json();
-    })
-    .then((info) => {
-      //turn off loading
-      setTimeout(() => {
-        loading.style.display = 'none';
-      }, 300);
-
-      _fotoPoke.src = info.sprites.other['official-artwork'].front_default;
-
-      _fotoPokeMobile.src =
-        info.sprites.other['official-artwork'].front_default;
-
-      _identificacaoPoke.innerHTML = `#${info.id} - ${
-        info.name[0].toUpperCase() + info.name.substring(1, info.name.length)
-      }`;
-
-      const tiposEncontrados = info.types.map((item) => {
-        return item.type.name;
-      });
-      _tipoPoke.innerHTML = Utils.retornaTipos(tiposEncontrados);
-
-      corDeFundo(tiposEncontrados[0]); // muda cor de fundo
-
-      _alturaPoke.innerHTML = info.height / 10 + 'm';
-
-      _pesoPoke.innerHTML = info.weight / 10 + ' kgs';
-
-      const habilidadesEncontradas = info.abilities.map((item) => {
-        return item.ability.name;
-      });
-      _habilidadePoke.innerHTML = Utils.retornaHabilidades(
-        habilidadesEncontradas
-      );
-
-      _hpPoke.value = info.stats[0].base_stat;
-      _ataquePoke.value = info.stats[1].base_stat;
-      _defesaPoke.value = info.stats[2].base_stat;
-      _ataqueEspecialPoke.value = info.stats[3].base_stat;
-      _defesaEspecialPoke.value = info.stats[4].base_stat;
-      _velocidadePoke.value = info.stats[5].base_stat;
-
-      //verificar se o pokemon voa, inserir animação
-      verificaVoador(tiposEncontrados, habilidadesEncontradas);
-
-      /* tratamento para outliers */
-      tratamentoOutliers();
-    });
-}
-
 function buscaPoke() {
   event.preventDefault();
   document.querySelector('.noResult').style.display = 'none';
@@ -336,6 +223,30 @@ function changeStatsInfo(e) {
   if (e.srcElement.id === 'velocidade') info = `"${_velocidadePoke.value}"`;
 
   document.documentElement.style.setProperty('--statsText', info);
+}
+
+function handleCloseInfo() {
+  resizeWindow();
+}
+
+function resizeWindow() {
+  if (__dialogInfo) {
+    dialogPokeInfo.style.display = 'none';
+    content.style.display = 'flex';
+    body.style.overflowY = 'scroll';
+    __clickPosition.card.scrollIntoView();
+    document.documentElement.style.setProperty(
+      '--mainColor',
+      `rgba(61, 64, 168, 0.9)`
+    );
+    __dialogInfo = false;
+  }
+}
+
+function verificaVoadorMiniCard(arrayTipos, arrayHabilidades, poke) {
+  if (arrayTipos.includes('flying') || arrayHabilidades.includes('levitate'))
+    _fotoPoke.style.animation = 'flyingPoke 2s ease-in-out infinite';
+  else _fotoPoke.style.animation = '';
 }
 
 function verificaVoador(arrayTipos, arrayHabilidades) {
