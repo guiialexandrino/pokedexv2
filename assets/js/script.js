@@ -352,6 +352,8 @@ function autoCompleteMethod() {
     }
   }
 
+  setTimeout(() => removeElements(), 1500);
+
   const showSearch = __pokedex.filter(
     (poke) =>
       poke.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
