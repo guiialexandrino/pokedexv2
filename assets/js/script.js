@@ -4,11 +4,12 @@ import Utils from './utils.js';
 /* Variaveis Globais */
 
 const __pokedexNumber = 151;
-let __pokes = [];
-let __selectedPoke = {};
 let __pokedex = [];
-let __dialogInfo = false;
+let __pokedexBackup = [];
+let __searchResult = [];
+let __selectedPoke = {};
 let __clickPosition = {};
+let __dialogInfo = false;
 
 /* Elementos Reativos da página */
 
@@ -58,6 +59,23 @@ body.addEventListener('click', () => removeElements());
 
 /* Métodos iniciais para carregar pokes */
 
+async function getGeneralInfoPokes(id) {
+  return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((response) =>
+    response.json()
+  );
+}
+
+async function addExtraInfo(pokedexArray, id) {
+  return fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+    .then((response) => response.json())
+    .then((info) =>
+      Object.assign(pokedexArray[id - 1], {
+        genera: info.genera,
+        flavor_text_entries: info.flavor_text_entries,
+      })
+    );
+}
+
 async function getPokedex() {
   for (let i = 1; i <= __pokedexNumber; i++) {
     loading.style.display = 'flex';
@@ -74,6 +92,10 @@ async function getPokedex() {
       __pokedex[i].name[0].toUpperCase() + __pokedex[i].name.substring(1);
   }
 
+  createInterface();
+}
+
+function createInterface() {
   loading.style.display = 'none';
   const utils = Utils.retornaMiniCards(__pokedex);
   _maxContentCards.innerHTML = utils.html;
@@ -103,23 +125,6 @@ async function getPokedex() {
       showInfoCard(poke, index, card, e);
     });
   });
-}
-
-async function getGeneralInfoPokes(id) {
-  return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((response) =>
-    response.json()
-  );
-}
-
-async function addExtraInfo(pokedexArray, id) {
-  return fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
-    .then((response) => response.json())
-    .then((info) =>
-      Object.assign(pokedexArray[id - 1], {
-        genera: info.genera,
-        flavor_text_entries: info.flavor_text_entries,
-      })
-    );
 }
 
 function showInfoCard(poke, index, card, e) {
@@ -165,6 +170,7 @@ function showInfoCard(poke, index, card, e) {
 /* Chama Método Inicial para carregar lista de pokes*/
 
 await getPokedex();
+__pokedexBackup = [...__pokedex]; // cópia - para resetar as buscas
 
 /* Métodos ao clicar no poke para visualizar detalhes */
 
@@ -227,24 +233,6 @@ function loadPokeInfo(pokemon) {
   tratamentoOutliers();
 
   dialogPokeInfo.style.display = 'flex';
-}
-
-function buscaPoke() {
-  event.preventDefault();
-  document.querySelector('.noResult').style.display = 'none';
-
-  const result = __pokes.find((pokemon) => {
-    let name = pokemon.label.split(' ')[2];
-    return name.toUpperCase() === input.value.toUpperCase();
-  });
-
-  if (result) {
-    pokemonToSearch = result.value;
-    select.selectedIndex = result.value - 1;
-    getCaracteristicas();
-    getInformacoesGerais();
-    input.value = '';
-  } else document.querySelector('.noResult').style.display = 'block';
 }
 
 function changeStatsInfo(e) {
@@ -328,6 +316,14 @@ function tratamentoOutliers() {
 
 //Auto complete Methods
 function autoCompleteMethod() {
+  __pokedex = [...__pokedexBackup];
+
+  if (input.value === '') {
+    createInterface();
+    removeElements();
+    return;
+  }
+
   removeElements();
   for (let i of __pokedex) {
     //convert input to lowercase and compare with each string
@@ -355,11 +351,25 @@ function autoCompleteMethod() {
       document.querySelector('.list').appendChild(listItem);
     }
   }
+
+  const showSearch = __pokedex.filter(
+    (poke) =>
+      poke.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
+      input.value != ''
+  );
+  __pokedex = showSearch;
+  createInterface();
 }
 
 function displayNames(value) {
   input.value = value;
-  console.log(input.value);
+  const showSearch = __pokedex.filter(
+    (poke) =>
+      poke.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
+      input.value != ''
+  );
+  __pokedex = showSearch;
+  createInterface();
   removeElements();
 }
 
