@@ -3,10 +3,10 @@ import Utils from './utils.js';
 
 /* Variaveis Globais */
 
+const __pokedexNumber = 151;
 let __pokes = [];
 let __selectedPoke = {};
 let __pokedex = [];
-const __pokedexNumber = 386;
 let __dialogInfo = false;
 let __clickPosition = {};
 
@@ -14,6 +14,7 @@ let __clickPosition = {};
 
 const body = document.querySelector('body');
 const content = document.querySelector('.content');
+const input = document.getElementById('show-poke-list');
 const loading = document.querySelector('.show_dialog_loading');
 const closeInfoButton = document.querySelector('#closeInfoButton');
 const dialogPokeInfo = document.querySelector('.show_dialog_info');
@@ -52,6 +53,8 @@ _defesaEspecialPoke.addEventListener('mouseenter', changeStatsInfo);
 _velocidadePoke.addEventListener('mouseenter', changeStatsInfo);
 closeInfoButton.addEventListener('click', handleCloseInfo);
 window.addEventListener('resize', resizeWindow);
+input.addEventListener('keyup', autoCompleteMethod);
+body.addEventListener('click', () => removeElements());
 
 /* Métodos iniciais para carregar pokes */
 
@@ -64,6 +67,11 @@ async function getPokedex() {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  for (let i in __pokedex) {
+    __pokedex[i].name =
+      __pokedex[i].name[0].toUpperCase() + __pokedex[i].name.substring(1);
   }
 
   loading.style.display = 'none';
@@ -133,6 +141,7 @@ function showInfoCard(poke, index, card, e) {
   const windowUserNavigatorHeight = window.innerHeight; // altura da janela navegador do usuário
   const actualScroll = e.view.scrollY; // quanto de scroll atual
 
+  // correção do .top
   __clickPosition = {
     card: card,
     position: clickYAxis - differenceClickYAxis,
@@ -140,6 +149,7 @@ function showInfoCard(poke, index, card, e) {
 
   dialogPokeInfo.style.top = `${__clickPosition.position}px`;
 
+  // correção para exibição dos cards quando no fim do scroll!
   if (
     !(__clickPosition.position + windowUserNavigatorHeight <= scrollingTotal)
   ) {
@@ -165,6 +175,8 @@ function handlePoke() {
 }
 
 function loadPokeInfo(pokemon) {
+  removeElements();
+
   _descricaoPoke.innerHTML = pokemon.flavor_text_entries[8].flavor_text.replace(
     /\n/g,
     ' '
@@ -312,4 +324,48 @@ function tratamentoOutliers() {
     _hpPoke.classList.remove('progress-star');
     _hpPoke.max = 170;
   }
+}
+
+//Auto complete Methods
+function autoCompleteMethod() {
+  removeElements();
+  for (let i of __pokedex) {
+    //convert input to lowercase and compare with each string
+
+    if (
+      i.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
+      input.value != ''
+    ) {
+      //create li element
+      let listItem = document.createElement('li');
+
+      //One common class name
+      listItem.classList.add('list-items');
+      listItem.style.cursor = 'pointer';
+      listItem.onclick = function () {
+        displayNames(i.name);
+      };
+
+      //Display matched part in bold
+      let word = '<b>' + i.name.substr(0, input.value.length) + '</b>';
+      word += i.name.substr(input.value.length);
+
+      //display the value in array
+      listItem.innerHTML = word;
+      document.querySelector('.list').appendChild(listItem);
+    }
+  }
+}
+
+function displayNames(value) {
+  input.value = value;
+  console.log(input.value);
+  removeElements();
+}
+
+function removeElements() {
+  let items = document.querySelectorAll('.list-items');
+  items.forEach((item) => {
+    item.remove();
+  });
 }

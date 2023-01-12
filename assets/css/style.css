@@ -94,6 +94,93 @@ img {
   width: 100%;
 }
 
+.searchPoke {
+  position: relative;
+  margin-top: 25px;
+}
+
+input {
+  padding: 10px;
+  font-size: 1.1rem;
+  border: solid 1px var(--mainColor);
+  width: 350px;
+  color: #333;
+  border-radius: 20px;
+  padding-left: 30px;
+  padding-right: 63px;
+  text-align: center;
+}
+
+input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 15px;
+}
+.list {
+  opacity: 0.97;
+  position: absolute;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 2020;
+  border-radius: 10px;
+}
+.list-items {
+  padding: 10px 5px;
+}
+
+.list-items:before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  right: 4%;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+  z-index: 1;
+}
+
+.list-items:before:hover {
+  border-bottom: red;
+}
+
+.list-items:hover {
+  background-color: rgba(61, 64, 168, 0.3);
+}
+
+.list-items:hover:first-child {
+  border-radius: 10px 10px 0 0;
+}
+
+.list-items:hover:last-child {
+  border-radius: 0 0 10px 10px;
+}
+
+.search-icon {
+  position: relative;
+}
+
+.search-icon:after {
+  content: '';
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  background-image: url('../img/search.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: translateY(-50%);
+  display: block;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  pointer-events: none;
+}
+
 .maxContent > .miniCardPoke {
   position: relative;
   background-color: #fff;
@@ -131,7 +218,7 @@ img {
 
 .miniCardPoke > .miniImgCard {
   position: relative;
-  height: 180px;
+  height: 200px;
   width: 300px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -154,27 +241,20 @@ img {
   z-index: 1;
 }
 
-.miniImgCard > .circle {
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  z-index: 0;
-}
-
 .miniCardPoke > .infoPokeMiniCard {
   background-color: white;
   margin-bottom: 10px;
-  height: 90px;
-  width: 270px;
+  padding-top: 6px;
+  height: 75px;
+  width: 250px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  padding-top: 14px;
 }
 
 .infoPokeMiniCard > h2 {
-  margin-bottom: 14px;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
   color: #2e2e2e;
 }
 
@@ -238,14 +318,6 @@ img {
   right: 00px;
 }
 
-select,
-input {
-  padding: 10px;
-  font-size: 1.1rem;
-  border: solid 1px var(--mainColor);
-  width: 200px;
-}
-
 button {
   padding: 10px;
   font-size: 1.1rem;
@@ -266,16 +338,6 @@ button:active {
   position: absolute;
   top: -60px;
   left: 0px;
-}
-
-.searchPoke {
-  position: absolute;
-  top: -60px;
-  left: 210px;
-}
-
-#searchInput {
-  position: relative;
 }
 
 .noResult {

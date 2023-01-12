@@ -16,7 +16,7 @@ function traduzNomeTipo(item) {
   if (item == 'fire') return 'Fogo';
   if (item == 'grass') return 'Grama';
   if (item == 'poison') return 'Veneno';
-  if (item == 'water') return 'Water';
+  if (item == 'water') return 'Água';
   if (item == 'psychic') return 'Psíquico';
   if (item == 'fairy') return 'Fada';
   if (item == 'ground') return 'Terra';
@@ -118,7 +118,7 @@ function retornaMiniCards(array) {
       item.name
     }-info" class="infoPokeMiniCard" style="background-color: ${finalColor}">
     <h2>
-    ${item.name[0].toUpperCase() + item.name.substring(1)}</h2>
+    ${item.name}</h2>
     <div>
     ${retornaTipos(tipos)} 
     </div>
