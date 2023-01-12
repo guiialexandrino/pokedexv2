@@ -3,10 +3,9 @@ import Utils from './utils.js';
 
 /* Variaveis Globais */
 
-const __pokedexNumber = 151;
+const __pokedexNumber = 251;
 let __pokedex = [];
 let __pokedexBackup = [];
-let __searchResult = [];
 let __selectedPoke = {};
 let __clickPosition = {};
 let __dialogInfo = false;
@@ -353,7 +352,7 @@ function autoCompleteMethod() {
     }
   }
 
-  setTimeout(() => removeElements(), 1500);
+  setTimeout(() => removeElements(), 2000);
 
   const showSearch = __pokedex.filter(
     (poke) =>
