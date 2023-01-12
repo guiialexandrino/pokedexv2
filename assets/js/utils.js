@@ -108,7 +108,7 @@ function retornaMiniCards(array) {
     <div id="${item.name}" class="miniCardPoke">
     <div class="outlinedEffect"></div>
     <div class="miniImgCard"">
-    <h3>#${index + 1}</h3>
+    <h3>#${item.idNumber}</h3>
     <div class="img-miniImg" style="background-image: url(${
       item.sprites.other['official-artwork'].front_default
     }); ${flyPoke}"></div>

@@ -90,6 +90,7 @@ async function getPokedex() {
   for (let i in __pokedex) {
     __pokedex[i].name =
       __pokedex[i].name[0].toUpperCase() + __pokedex[i].name.substring(1);
+    __pokedex[i].idNumber = Number(i) + 1;
   }
 
   createInterface();
