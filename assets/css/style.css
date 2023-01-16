@@ -62,6 +62,7 @@ img {
 
 .show_dialog_loading {
   display: none;
+  flex-direction: column;
   position: absolute;
   align-items: center;
   justify-content: center;

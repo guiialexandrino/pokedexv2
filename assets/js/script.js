@@ -81,6 +81,9 @@ async function getPokedex() {
     try {
       __pokedex.push(await getGeneralInfoPokes(i));
       await addExtraInfo(__pokedex, i);
+      document.querySelector('#loading-status').innerHTML = `${Math.round(
+        (i / __pokedexNumber) * 100
+      )} %`;
     } catch (error) {
       console.error(error);
     }
