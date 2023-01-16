@@ -349,7 +349,6 @@ function autoCompleteMethod() {
   );
 
   __pokedex = showSearch;
-  // createInterface();
 }
 
 function displayNames(value, e) {
@@ -360,7 +359,7 @@ function displayNames(value, e) {
       input.value != ''
   );
   __pokedex = showSearch;
-  createInterface();
+
   showInfoCard(__pokedex[0], 0, e);
   removeElements();
 }
