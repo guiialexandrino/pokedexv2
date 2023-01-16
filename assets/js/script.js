@@ -359,14 +359,6 @@ function autoCompleteMethod() {
       document.querySelector('.list').appendChild(listItem);
     }
   }
-
-  const showSearch = __pokedex.filter(
-    (poke) =>
-      poke.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
-      input.value != ''
-  );
-
-  __pokedex = showSearch;
 }
 
 function displayNames(value, e) {
