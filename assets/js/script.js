@@ -123,7 +123,7 @@ async function getPokedex() {
 }
 
 function createInterface() {
-  removeElements();
+  // removeElements();
   setTimeout(() => (loading.style.display = 'none'), 300);
   const utils = Utils.retornaMiniCards(__pokedex);
   _maxContentCards.innerHTML = utils.html;
@@ -253,6 +253,11 @@ function resizeWindow() {
       `rgba(61, 64, 168, 0.9)`
     );
     __dialogInfo = false;
+
+    if (input.value) {
+      __pokedex = [...__pokedexBackup];
+      createInterface();
+    }
   }
 }
 
@@ -323,8 +328,8 @@ function autoCompleteMethod() {
       //One common class name
       listItem.classList.add('list-items');
       listItem.style.cursor = 'pointer';
-      listItem.onclick = function () {
-        displayNames(i.name);
+      listItem.onclick = function (e) {
+        displayNames(i.name, e);
       };
 
       //Display matched part in bold
@@ -337,21 +342,17 @@ function autoCompleteMethod() {
     }
   }
 
-  setTimeout(() => removeElements(), 4000);
-
   const showSearch = __pokedex.filter(
     (poke) =>
       poke.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
       input.value != ''
   );
 
-  // if (showSearch.length > 0) loading.style.display = 'flex';
-
   __pokedex = showSearch;
-  createInterface();
+  // createInterface();
 }
 
-function displayNames(value) {
+function displayNames(value, e) {
   input.value = value;
   const showSearch = __pokedex.filter(
     (poke) =>
@@ -360,6 +361,7 @@ function displayNames(value) {
   );
   __pokedex = showSearch;
   createInterface();
+  showInfoCard(__pokedex[0], 0, e);
   removeElements();
 }
 
