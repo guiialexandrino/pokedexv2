@@ -33,12 +33,12 @@ function traduzNomeTipo(item) {
 
 function retornaCodigoCorDoTipo(item) {
   if (item == 'electric') return 'rgba(254, 225, 103, 0.9)';
-  if (item == 'normal') return 'rgba(246, 153, 181, 0.9)';
-  if (item == 'fire') return 'rgba(243, 42, 42, 0.9)';
+  if (item == 'normal') return 'rgba(245, 220, 227, 0.9)';
+  if (item == 'fire') return 'rgba(255, 88, 64, 0.9)';
   if (item == 'grass') return 'rgba(128, 240, 129, 0.9)';
   if (item == 'poison') return 'rgba(197, 153, 246, 0.9)';
   if (item == 'water') return 'rgba(0, 183, 211, 0.9)';
-  if (item == 'psychic') return 'rgba(116, 14, 142, 0.9)';
+  if (item == 'psychic') return 'rgba(125, 53, 142, 0.9)';
   if (item == 'fairy') return 'rgba(225, 68, 178, 0.9)';
   if (item == 'ground') return 'rgba(102, 57, 17, 0.9)';
   if (item == 'steel') return 'rgba(189, 187, 184, 0.9)';
@@ -49,7 +49,32 @@ function retornaCodigoCorDoTipo(item) {
   if (item == 'flying') return 'rgba(193, 249, 251, 0.9)';
   if (item == 'ice') return 'rgba(103, 243, 241, 0.9)';
   if (item == 'ghost') return 'rgba(80, 12, 176, 0.9)';
-  if (item == 'dark') return 'rgba(80, 12, 176, 0.9)';
+  if (item == 'dark') return 'rgba(90, 83, 102, 0.9)';
+}
+
+function imgFundoPorTipo(item) {
+  let pathImg = 'Pokemon_Type_Icon_';
+
+  if (item == 'electric') pathImg += 'Electric';
+  if (item == 'normal') pathImg += 'Normal';
+  if (item == 'fire') pathImg += 'Fire';
+  if (item == 'grass') pathImg += 'Grass';
+  if (item == 'poison') pathImg += 'Poison';
+  if (item == 'water') pathImg += 'Water';
+  if (item == 'psychic') pathImg += 'Psychic';
+  if (item == 'fairy') pathImg += 'Fairy';
+  if (item == 'ground') pathImg += 'Ground';
+  if (item == 'steel') pathImg += 'Steel';
+  if (item == 'bug') pathImg += 'Bug';
+  if (item == 'fighting') pathImg += 'Fighting';
+  if (item == 'rock') pathImg += 'Rock';
+  if (item == 'dragon') pathImg += 'Dragon';
+  if (item == 'flying') pathImg += 'Flying';
+  if (item == 'ice') pathImg += 'Ice';
+  if (item == 'ghost') pathImg += 'Ghost';
+  if (item == 'dark') pathImg += 'Dark';
+
+  return pathImg + '.svg';
 }
 
 function mudaCorTexto(item) {
@@ -59,6 +84,7 @@ function mudaCorTexto(item) {
     item == 'ground' ||
     item == 'rock' ||
     item == 'ghost' ||
+    item == 'fairy' ||
     item == 'dark'
   )
     return 'white';
@@ -107,16 +133,17 @@ function retornaMiniCards(array) {
     html += `
     <div id="${item.name}" class="miniCardPoke">
     <div class="outlinedEffect"></div>
+    <div class="backgroundType" style="background-image: url('../assets/img/poke-types/${imgFundoPorTipo(
+      tipos[0]
+    )}') !important; "></div>
     <div class="miniImgCard"">
-    <h3>#${item.idNumber}</h3>
+    <h3 id="${item.name}-number">#${item.idNumber}</h3>
     <div class="img-miniImg" style="background-image: url(${
       item.sprites.other['official-artwork'].front_default
     }); ${flyPoke}"></div>
 
     </div>
-    <div id="${
-      item.name
-    }-info" class="infoPokeMiniCard" style="background-color: ${finalColor}">
+    <div id="${item.name}-info" class="infoPokeMiniCard">
     <h2>
     ${item.name}</h2>
     <div>
@@ -134,4 +161,6 @@ export default {
   retornaCodigoCorDoTipo,
   retornaHabilidades,
   retornaMiniCards,
+  imgFundoPorTipo,
+  mudaCorTexto,
 };

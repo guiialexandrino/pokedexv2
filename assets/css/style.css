@@ -23,6 +23,7 @@ body {
   background-color: var(--mainColor);
   background-image: url('../img/pokeballPattern_opacity.png');
   overflow-x: hidden;
+  color: #2e2e2e;
 }
 
 img {
@@ -208,6 +209,17 @@ ul {
   border-color: rgba(0, 0, 0, 0.2);
 }
 
+.miniCardPoke > .backgroundType {
+  position: absolute;
+  top: 12px;
+  left: 30px;
+  width: 80%;
+  height: 80%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.12;
+}
+
 .maxContent > .miniCardPoke:hover {
   animation: cardMovement 0.3s ease-in-out;
   transform: translateY(-10px);
@@ -219,47 +231,54 @@ ul {
 
 .miniCardPoke > .miniImgCard {
   position: relative;
-  height: 200px;
+  height: 225px;
   width: 300px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  /* background-color: blue; */
+}
+
+.miniImgCard > .img-miniImg {
+  width: 205px;
+  height: 205px;
+  background-size: contain;
+  background-position: center;
+  background-position-y: 10px;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.addWhiteColor {
+  color: white !important;
 }
 
 .miniImgCard > h3 {
   position: absolute;
   top: 10px;
   left: 10px;
-  color: #2e2e2e;
-}
-
-.miniImgCard > .img-miniImg {
-  width: 195px;
-  height: 195px;
-  background-size: contain;
-  z-index: 1;
-}
-
-.miniCardPoke > .infoPokeMiniCard {
-  background-color: white;
-  margin-bottom: 15px;
-  padding-top: 3px;
-  height: 75px;
-  width: 250px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
+  /* color: #2e2e2e; */
 }
 
 .infoPokeMiniCard > h2 {
   font-size: 1.2rem;
-  margin-bottom: 15px;
-  color: #2e2e2e;
+  margin-bottom: 6px;
+}
+
+.miniCardPoke > .infoPokeMiniCard {
+  padding-top: 0px;
+  height: 58px;
+  width: 250px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
 }
 
 .infoPokeMiniCard > div > span {
+  font-size: 0.95rem;
   margin-right: 8px;
   padding: 5px;
   border-radius: 5px;

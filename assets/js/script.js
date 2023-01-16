@@ -132,21 +132,23 @@ function createInterface() {
   utils.idPoke.forEach((poke, index) => {
     const card = document.querySelector(`#${poke.name}`);
     const info = document.querySelector(`#${poke.name}-info`);
+    const number = document.querySelector(`#${poke.name}-number`);
 
     let cor = Utils.retornaCodigoCorDoTipo(poke.type);
 
-    let fixColor = cor.split(',');
-    fixColor[fixColor.length - 1] = ' 0.2)';
-    const finalColor = fixColor.join(',');
-
     card.addEventListener('mouseenter', () => {
       card.style.background = cor;
-      info.style.background = 'rgba(255,255,255,0.5)';
+      if (Utils.mudaCorTexto(poke.type) === 'white') {
+        info.classList.add('addWhiteColor');
+        number.classList.add('addWhiteColor');
+      }
     });
 
     card.addEventListener('mouseleave', () => {
       card.style.background = 'white';
-      info.style.background = finalColor;
+      info.style.background = 'none';
+      info.classList.remove('addWhiteColor');
+      number.classList.remove('addWhiteColor');
     });
 
     card.addEventListener('click', (e) => {
