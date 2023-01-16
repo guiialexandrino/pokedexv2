@@ -305,7 +305,7 @@ function tratamentoOutliers() {
 }
 
 //Auto complete Methods
-function autoCompleteMethod() {
+function autoCompleteMethod(e) {
   __pokedex = [...__pokedexBackup];
 
   if (input.value === '') {

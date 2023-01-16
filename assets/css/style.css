@@ -184,7 +184,6 @@ ul {
 
 .maxContent > .miniCardPoke {
   position: relative;
-  background-color: #fff;
   width: 300px;
   height: 300px;
   border-radius: 10px;
@@ -193,6 +192,7 @@ ul {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #fff;
   transition: all ease-in-out 0.3s;
 }
 
@@ -236,16 +236,16 @@ ul {
 }
 
 .miniImgCard > .img-miniImg {
-  width: 190px;
-  height: 190px;
+  width: 195px;
+  height: 195px;
   background-size: contain;
   z-index: 1;
 }
 
 .miniCardPoke > .infoPokeMiniCard {
   background-color: white;
-  margin-bottom: 10px;
-  padding-top: 6px;
+  margin-bottom: 15px;
+  padding-top: 3px;
   height: 75px;
   width: 250px;
   border-radius: 10px;
