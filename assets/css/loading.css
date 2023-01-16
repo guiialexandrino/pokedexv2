@@ -2,7 +2,7 @@
   position: relative;
   width: 180px;
   height: 180px;
-  z-index: 2002;
+  z-index: 3002;
   background-image: url('../img/pokeball.png');
   background-repeat: no-repeat;
   background-size: contain;

@@ -123,7 +123,8 @@ async function getPokedex() {
 }
 
 function createInterface() {
-  loading.style.display = 'none';
+  removeElements();
+  setTimeout(() => (loading.style.display = 'none'), 300);
   const utils = Utils.retornaMiniCards(__pokedex);
   _maxContentCards.innerHTML = utils.html;
 
@@ -336,13 +337,16 @@ function autoCompleteMethod() {
     }
   }
 
-  setTimeout(() => removeElements(), 2000);
+  setTimeout(() => removeElements(), 4000);
 
   const showSearch = __pokedex.filter(
     (poke) =>
       poke.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
       input.value != ''
   );
+
+  // if (showSearch.length > 0) loading.style.display = 'flex';
+
   __pokedex = showSearch;
   createInterface();
 }
