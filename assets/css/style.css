@@ -76,7 +76,7 @@ img {
 .show_dialog_info {
   display: none;
   position: absolute;
-  /* top: 0px; */
+  top: 0px;
   height: 105vh;
   width: 100%;
   background-color: var(--mainColor);

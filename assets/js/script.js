@@ -3,7 +3,7 @@ import Utils from './utils.js';
 
 /* Variaveis Globais */
 
-const __pokedexNumber = 251;
+const __pokedexNumber = 351;
 let __pokedex = [];
 let __pokedexBackup = [];
 let __selectedPoke = {};
@@ -55,6 +55,10 @@ closeInfoButton.addEventListener('click', handleCloseInfo);
 window.addEventListener('resize', resizeWindow);
 input.addEventListener('keyup', autoCompleteMethod);
 body.addEventListener('click', () => removeElements());
+window.addEventListener(
+  'scroll',
+  () => (dialogPokeInfo.style.top = `${window.pageYOffset}px`)
+);
 
 /* Métodos iniciais para carregar pokes */
 
@@ -125,12 +129,12 @@ function createInterface() {
     });
 
     card.addEventListener('click', (e) => {
-      showInfoCard(poke, index, card, e);
+      showInfoCard(poke, index, e);
     });
   });
 }
 
-function showInfoCard(poke, index, card, e) {
+function showInfoCard(poke, index, e) {
   __selectedPoke = { ...poke, id: index };
   if (e.view.outerWidth <= 1000) {
     body.style.overflowY = 'scroll';
@@ -143,44 +147,8 @@ function showInfoCard(poke, index, card, e) {
   }
   __dialogInfo = true;
 
-  const clickYAxis = e.pageY; // Posição do eixo Y do Click
-  const differenceClickYAxis = e.offsetY; // diferença entre o click no eixo Y e onde o elemento começa no eixo Y.
-  const scrollingTotal = window.document.documentElement.scrollHeight; // total de scroll da pagina
-  const windowUserNavigatorHeight = window.innerHeight; // altura da janela navegador do usuário
-  const actualScroll = e.view.scrollY; // quanto de scroll atual
-
-  // correção do .top
-  __clickPosition = {
-    card: card,
-    position: clickYAxis - differenceClickYAxis,
-  };
-
-  dialogPokeInfo.style.top = `${__clickPosition.position}px`;
-
-  // correção para exibição dos cards quando no fim do scroll!
-  if (
-    !(__clickPosition.position + windowUserNavigatorHeight <= scrollingTotal)
-  ) {
-    dialogPokeInfo.style.top = `${
-      scrollingTotal - windowUserNavigatorHeight
-    }px`;
-  }
-
-  card.scrollIntoView();
-  handlePoke();
-}
-
-/* Chama Método Inicial para carregar lista de pokes*/
-
-await getPokedex();
-__pokedexBackup = [...__pokedex]; // cópia - para resetar as buscas
-
-/* Métodos ao clicar no poke para visualizar detalhes */
-
-function handlePoke() {
-  const poke = __pokedex[__selectedPoke.id];
-  loadPokeInfo(poke);
-  //colocar animação no dialog
+  const showPokeInfo = __pokedex[__selectedPoke.id];
+  loadPokeInfo(showPokeInfo);
 }
 
 function loadPokeInfo(pokemon) {
@@ -259,19 +227,12 @@ function resizeWindow() {
     dialogPokeInfo.style.display = 'none';
     content.style.display = 'flex';
     body.style.overflowY = 'scroll';
-    __clickPosition.card.scrollIntoView();
     document.documentElement.style.setProperty(
       '--mainColor',
       `rgba(61, 64, 168, 0.9)`
     );
     __dialogInfo = false;
   }
-}
-
-function verificaVoadorMiniCard(arrayTipos, arrayHabilidades, poke) {
-  if (arrayTipos.includes('flying') || arrayHabilidades.includes('levitate'))
-    _fotoPoke.style.animation = 'flyingPoke 2s ease-in-out infinite';
-  else _fotoPoke.style.animation = '';
 }
 
 function verificaVoador(arrayTipos, arrayHabilidades) {
@@ -384,3 +345,8 @@ function removeElements() {
     item.remove();
   });
 }
+
+/* Chama Método Inicial para carregar lista de pokes*/
+
+await getPokedex();
+__pokedexBackup = [...__pokedex]; // cópia - para resetar as buscas
