@@ -3,7 +3,7 @@ import Utils from './utils.js';
 
 /* Variaveis Globais */
 
-const __pokedexNumber = 386;
+const __pokedexNumber = 486;
 let __loadingProcess = 0;
 let __pokedex = [];
 let __pokedexBackup = [];
