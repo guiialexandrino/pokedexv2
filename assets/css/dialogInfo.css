@@ -34,6 +34,13 @@
   z-index: 1;
 }
 
+.compareButton {
+  position: absolute;
+  top: -55px;
+  left: 105px;
+  cursor: pointer;
+}
+
 .closeButton {
   position: absolute;
   top: -55px;

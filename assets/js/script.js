@@ -3,11 +3,12 @@ import Utils from './utils.js';
 
 /* Variaveis Globais */
 
-const __pokedexNumber = 486;
+const __pokedexNumber = 23; //486
 let __loadingProcess = 0;
 let __pokedex = [];
 let __pokedexBackup = [];
 let __selectedPoke = {};
+let __pokesToCompare = [];
 let __dialogInfo = false;
 
 /* Elementos Reativos da página */
@@ -19,6 +20,8 @@ const searchDiv = document.querySelector('.searchPoke');
 const input = document.getElementById('show-poke-list');
 const loading = document.querySelector('.show_dialog_loading');
 const closeInfoButton = document.querySelector('#closeInfoButton');
+const addToCompare = document.querySelector('#addToVsMode');
+const handleVsMode = document.querySelector('#handleVsMode');
 const dialogPokeInfo = document.querySelector('.show_dialog_info');
 const corDeFundo = (tipoPokemon) => {
   document.documentElement.style.setProperty(
@@ -44,6 +47,8 @@ const _defesaPoke = document.querySelector('#defesa');
 const _ataqueEspecialPoke = document.querySelector('#ataqueE');
 const _defesaEspecialPoke = document.querySelector('#defesaE');
 const _velocidadePoke = document.querySelector('#velocidade');
+const slot1 = document.querySelector('#slot1');
+const slot2 = document.querySelector('#slot2');
 
 /* Adiciona Eventos */
 
@@ -54,6 +59,8 @@ _ataqueEspecialPoke.addEventListener('mouseenter', changeStatsInfo);
 _defesaEspecialPoke.addEventListener('mouseenter', changeStatsInfo);
 _velocidadePoke.addEventListener('mouseenter', changeStatsInfo);
 closeInfoButton.addEventListener('click', handleCloseInfo);
+addToCompare.addEventListener('click', addToComparePoke);
+handleVsMode.addEventListener('click', vsMode);
 window.addEventListener('resize', resizeWindow);
 input.addEventListener('keyup', autoCompleteMethod);
 body.addEventListener('click', cleanInput);
@@ -357,7 +364,6 @@ function tratamentoOutliers() {
 
 //Auto complete Methods
 function autoCompleteMethod() {
-  const scrollHeightCheck = 200;
   __pokedex = [...__pokedexBackup];
 
   if (input.value === '') {
@@ -418,6 +424,69 @@ function removeElements() {
   items.forEach((item) => {
     item.remove();
   });
+}
+
+/* VS MODE Methods */
+function addToComparePoke() {
+  const check = __pokesToCompare.filter((poke) => {
+    return poke.name === __selectedPoke.name;
+  });
+
+  if (check.length === 0) {
+    const searchPoke = __pokedexBackup.find((poke) => {
+      return poke.name === __selectedPoke.name;
+    });
+
+    if (__pokesToCompare.length < 2) {
+      __pokesToCompare.push(searchPoke);
+      const htmlUpdate = Utils.updateVsModeFooter(__pokesToCompare);
+
+      slot1.innerHTML = htmlUpdate.poke1;
+      document.querySelector('#slot1-del').addEventListener('click', (e) => {
+        deletePokeOfSlot(e, 1);
+      });
+
+      slot2.innerHTML = htmlUpdate.poke2;
+      if (htmlUpdate.poke2 !== 'Sem pokémon')
+        document.querySelector('#slot2-del').addEventListener('click', (e) => {
+          deletePokeOfSlot(e, 2);
+        });
+
+      if (__pokesToCompare.length === 2) handleVsMode.disabled = false;
+
+      return;
+    }
+
+    if (__pokesToCompare.length === 2) {
+      __pokesToCompare[0] = __pokesToCompare[1];
+      __pokesToCompare[1] = searchPoke;
+      const htmlUpdate = Utils.updateVsModeFooter(__pokesToCompare);
+
+      slot1.innerHTML = htmlUpdate.poke1;
+      document.querySelector('#slot1-del').addEventListener('click', (e) => {
+        deletePokeOfSlot(e, 1);
+      });
+
+      slot2.innerHTML = htmlUpdate.poke2;
+      document.querySelector('#slot2-del').addEventListener('click', (e) => {
+        deletePokeOfSlot(e, 2);
+      });
+    }
+  }
+}
+
+function deletePokeOfSlot(e, slot) {
+  const pokemon = e.target.parentNode.innerHTML.split(' <div');
+  __pokesToCompare = __pokesToCompare.filter((poke) => {
+    return poke.name !== pokemon[0];
+  });
+  if (slot === 1) slot1.innerHTML = 'Sem Pokémon';
+  else slot2.innerHTML = 'Sem Pokémon';
+  handleVsMode.disabled = true;
+}
+
+function vsMode() {
+  console.log('clicou para comparar pokemons');
 }
 
 /* Chama Método Inicial para carregar lista de pokes*/

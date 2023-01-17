@@ -156,6 +156,16 @@ function retornaMiniCards(array) {
   return { html, idPoke };
 }
 
+function updateVsModeFooter(pokes) {
+  let poke1 = `<div class="compareFlex">${pokes[0].name} <div id="slot1-del" class="compareButtonDelete"></div></div>`;
+
+  let poke2 = 'Sem pokémon';
+  if (pokes[1])
+    poke2 = `<div class="compareFlex">${pokes[1].name} <div id="slot2-del" class="compareButtonDelete"></div></div>`;
+
+  return { poke1, poke2 };
+}
+
 export default {
   retornaTipos,
   retornaCodigoCorDoTipo,
@@ -163,4 +173,5 @@ export default {
   retornaMiniCards,
   imgFundoPorTipo,
   mudaCorTexto,
+  updateVsModeFooter,
 };

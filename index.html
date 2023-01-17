@@ -41,6 +41,7 @@
             <div id="closeInfoButton" class="closeButton">
               <button>Fechar</button>
             </div>
+            <button id="addToVsMode" class="compareButton">Comparar</button>
             <!-- Imagem dispositivos maiores -->
             <img id="foto" class="pokeImageCard" />
             <div class="fundo_info"></div>
@@ -125,6 +126,19 @@
         <h2 id="loading-status">1%</h2>
       </div>
     </div>
+
+    <!-- Compare footer -->
+    <footer>
+      <div class="compareContent">
+        <h3>VS <span class="versusColor">Mode</span></h3>
+        <div class="compareStatus">
+          <span id="slot1">Sem pokémon</span>
+          <strong>vs</strong>
+          <span id="slot2">Sem pokémon</span>
+        </div>
+        <button id="handleVsMode" disabled>Go!</button>
+      </div>
+    </footer>
 
     <script type="module" src="./assets/js/script.js"></script>
   </body>

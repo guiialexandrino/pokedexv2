@@ -1,0 +1,59 @@
+footer {
+  background-color: rgba(23, 26, 31, 1);
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 0px;
+  transform: translateY(0px);
+  transition: transform 500ms;
+  right: 0px;
+  width: 100%;
+  z-index: 2000;
+}
+
+footer > .compareContent {
+  width: 1800px;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: white;
+  height: 60px;
+}
+
+.compareContent > h3 {
+  color: rgba(255, 88, 64, 1);
+}
+
+h3 > .versusColor {
+  color: white !important;
+}
+
+.compareStatus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compareStatus > strong {
+  margin: 0 10px;
+}
+
+.compareButtonDelete {
+  display: flex;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  background-image: url('../img/cancel.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.compareFlex {
+  display: flex;
+  height: 25px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
