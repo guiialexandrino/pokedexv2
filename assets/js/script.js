@@ -283,7 +283,7 @@ function handleCloseInfo(e) {
     body.style.overflowY = 'scroll';
     document.documentElement.style.setProperty(
       '--mainColor',
-      `rgba(61, 64, 168, 0.9)`
+      `rgba(23, 26, 51, 0.95)`
     );
 
     if (e.view.outerWidth <= 1000) {
