@@ -69,10 +69,12 @@ function cleanInput() {
   removeElements();
 }
 
+dialogPokeInfo.style.top = `${window.pageYOffset + 30}px`;
+
 function scrolling(e) {
   //Condição para mobile e normal atualizar o top do dialogPoke Info
   if (e.target.defaultView.outerWidth > 1000) {
-    dialogPokeInfo.style.top = `${window.pageYOffset + 60}px`;
+    dialogPokeInfo.style.top = `${window.pageYOffset + 30}px`;
   } else {
     dialogPokeInfo.style.top = `0px`;
   }
