@@ -14,6 +14,8 @@ let __dialogInfo = false;
 
 const body = document.querySelector('body');
 const content = document.querySelector('.content');
+const header = document.querySelector('.headerNav');
+const searchDiv = document.querySelector('.searchPoke');
 const input = document.getElementById('show-poke-list');
 const loading = document.querySelector('.show_dialog_loading');
 const closeInfoButton = document.querySelector('#closeInfoButton');
@@ -54,20 +56,36 @@ _velocidadePoke.addEventListener('mouseenter', changeStatsInfo);
 closeInfoButton.addEventListener('click', handleCloseInfo);
 window.addEventListener('resize', resizeWindow);
 input.addEventListener('keyup', autoCompleteMethod);
-body.addEventListener('click', () => {
+body.addEventListener('click', cleanInput);
+window.addEventListener('scroll', scrolling);
+
+/* Métodos para restaurar padrão */
+
+function cleanInput() {
   if (input.value) {
     __pokedex = [...__pokedexBackup];
     createInterface();
   }
   removeElements();
-});
-window.addEventListener('scroll', (e) => {
+}
+
+function scrolling(e) {
+  //Condição para mobile e normal atualizar o top do dialogPoke Info
   if (e.target.defaultView.outerWidth > 1000) {
-    dialogPokeInfo.style.top = `${window.pageYOffset}px`;
+    dialogPokeInfo.style.top = `${window.pageYOffset + 60}px`;
   } else {
     dialogPokeInfo.style.top = `0px`;
   }
-});
+
+  //aparecer nav Header
+  if (window.pageYOffset > 220) {
+    header.style.transform = 'translateY(0px)';
+    document.querySelector('.maxHeaderContent').appendChild(searchDiv);
+  } else {
+    header.style.transform = 'translateY(-60px)';
+    content.insertBefore(searchDiv, content.children[1]);
+  }
+}
 
 /* Métodos iniciais para carregar pokes */
 
@@ -181,8 +199,14 @@ function showInfoCard(poke, index, e) {
 
   const showPokeInfo = __pokedex[__selectedPoke.id];
   loadPokeInfo(showPokeInfo);
-  dialogPokeInfo.style.display = 'flex'; // mostra o card com a info
+
+  //exibe dados ao clicar no card
   __dialogInfo = true;
+  dialogPokeInfo.style.display = 'flex';
+  header.style.transform = 'translateY(0px)';
+  if (window.pageYOffset < 220) {
+    document.querySelector('.maxHeaderContent').appendChild(searchDiv);
+  }
 }
 
 function loadPokeInfo(pokemon) {
@@ -271,12 +295,19 @@ function handleCloseInfo(e) {
       createInterface();
     }
 
+    if (window.pageYOffset < 220) {
+      header.style.transform = 'translateY(-60px)';
+      document.querySelector('.maxHeaderContent').appendChild(searchDiv);
+      content.insertBefore(searchDiv, content.children[1]);
+    }
+
     __dialogInfo = false;
   }
 }
 
-function resizeWindow() {
-  handleCloseInfo();
+function resizeWindow(e) {
+  const event = { view: e.currentTarget };
+  handleCloseInfo(event);
 }
 
 function verificaVoador(arrayTipos, arrayHabilidades) {
@@ -324,6 +355,7 @@ function tratamentoOutliers() {
 
 //Auto complete Methods
 function autoCompleteMethod() {
+  const scrollHeightCheck = 200;
   __pokedex = [...__pokedexBackup];
 
   if (input.value === '') {
@@ -370,9 +402,10 @@ function displayNames(value, e) {
   );
   __pokedex = showSearch;
 
-  const el = document.querySelector(`#${__pokedex[0].name}`);
-  el.scrollIntoView();
-  window.scrollTo(0, window.scrollY - 100);
+  // const el = document.querySelector(`#${__pokedex[0].name}`);
+  // el.scrollIntoView();
+  // window.scrollTo(0, window.scrollY - 100);
+  header.style.transform = 'translateY(-60px)';
 
   showInfoCard(__pokedex[0], 0, e);
   removeElements();

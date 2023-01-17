@@ -27,6 +27,10 @@
 }
 
 @media (max-width: 960px) {
+  input {
+    width: 150px;
+  }
+
   .fundo_info {
     display: none;
   }
