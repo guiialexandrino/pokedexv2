@@ -87,10 +87,12 @@ function scrolling(e) {
   }
 
   //aparecer nav Header
-  if (window.pageYOffset > 220) {
+  if (window.pageYOffset >= 220) {
     header.style.transform = 'translateY(0px)';
     document.querySelector('.maxHeaderContent').appendChild(searchDiv);
-  } else {
+  }
+
+  if (window.pageYOffset < 220) {
     header.style.transform = 'translateY(-60px)';
     content.insertBefore(searchDiv, content.children[1]);
   }
