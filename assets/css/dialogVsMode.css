@@ -102,13 +102,20 @@
 /* Status */
 
 .vsMode_stats {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   margin: 40px 50px;
   width: 100%;
   text-align: left;
 }
 
-.vsMode_stats > span {
+.flexStats {
+  display: block;
+  width: calc(50% - 60px);
+}
+
+.flexStats > span {
   font-size: 0.9rem;
   margin-left: 60px;
 }
@@ -117,7 +124,7 @@
 .color_slot2 {
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
 }
 
 .color_slot1 {
@@ -125,11 +132,11 @@
 }
 
 .color_slot1 > strong {
-  width: 50px;
+  width: 60px;
 }
 
 .color_slot2 > #transparent_label {
-  width: 50px;
+  width: 60px;
   color: transparent !important;
 }
 
@@ -137,7 +144,8 @@
   display: block;
   position: relative;
   height: 15px;
-  width: 81%;
+  width: 70%;
+  margin-right: 10px;
   -webkit-appearance: none;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
@@ -163,7 +171,8 @@
   display: block;
   position: relative;
   height: 15px;
-  width: 81%;
+  width: 70%;
+  margin-right: 10px;
   -webkit-appearance: none;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
