@@ -24,6 +24,7 @@ const addToCompare = document.querySelector('#addToVsMode');
 const handleVsMode = document.querySelector('#handleVsMode');
 const dialogPokeInfo = document.querySelector('.show_dialog_info');
 const dialogVsMode = document.querySelector('.show_dialog_vs');
+const closeVsMode = document.querySelector('#closeVsMode');
 const corDeFundo = (tipoPokemon) => {
   document.documentElement.style.setProperty(
     '--mainColor',
@@ -62,6 +63,7 @@ _velocidadePoke.addEventListener('mouseenter', changeStatsInfo);
 closeInfoButton.addEventListener('click', handleCloseInfo);
 addToCompare.addEventListener('click', addToComparePoke);
 handleVsMode.addEventListener('click', vsMode);
+closeVsMode.addEventListener('click', handleCloseVsMode);
 window.addEventListener('resize', resizeWindow);
 input.addEventListener('keyup', autoCompleteMethod);
 body.addEventListener('click', cleanInput);
@@ -78,13 +80,16 @@ function cleanInput() {
 }
 
 dialogPokeInfo.style.top = `${window.pageYOffset + 30}px`;
+dialogVsMode.style.top = `${window.pageYOffset + 30}px`;
 
 function scrolling(e) {
   //Condição para mobile e normal atualizar o top do dialogPoke Info
   if (e.target.defaultView.outerWidth > 1000) {
     dialogPokeInfo.style.top = `${window.pageYOffset + 30}px`;
+    dialogVsMode.style.top = `${window.pageYOffset + 30}px`;
   } else {
     dialogPokeInfo.style.top = `0px`;
+    dialogVsMode.style.top = `0px`;
   }
 
   //aparecer nav Header
@@ -320,6 +325,7 @@ function handleCloseInfo(e) {
 function resizeWindow(e) {
   const event = { view: e.currentTarget };
   handleCloseInfo(event);
+  handleCloseVsMode(event);
 }
 
 function verificaVoador(arrayTipos, arrayHabilidades) {
@@ -488,9 +494,35 @@ function deletePokeOfSlot(e, slot) {
   handleVsMode.disabled = true;
 }
 
-function vsMode() {
+function vsMode(e) {
+  if (e.view.outerWidth <= 1000) {
+    body.style.overflowY = 'scroll';
+    body.style.overflowX = 'hidden';
+    body.scrollIntoView();
+  } else {
+    body.style.overflowY = 'hidden';
+    body.style.overflowX = 'hidden';
+  }
+
   dialogPokeInfo.style.display = 'none';
+  header.style.transform = 'translateY(0px)';
+  document.querySelector('.maxHeaderContent').appendChild(searchDiv);
   dialogVsMode.style.display = 'flex';
+  document.documentElement.style.setProperty(
+    '--mainColor',
+    `rgba(23, 26, 51, 0.8)`
+  );
+}
+
+function handleCloseVsMode(e) {
+  dialogVsMode.style.display = 'none';
+  header.style.transform = 'translateY(-60px)';
+  content.insertBefore(searchDiv, content.children[1]);
+  body.style.overflowY = 'scroll';
+  document.documentElement.style.setProperty(
+    '--mainColor',
+    `rgba(23, 26, 51, 0.95)`
+  );
 }
 
 /* Chama Método Inicial para carregar lista de pokes*/

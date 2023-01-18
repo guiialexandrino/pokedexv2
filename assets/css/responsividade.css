@@ -50,6 +50,9 @@
 
   .card {
     margin-top: 60px;
+    margin-bottom: 0px;
+    margin-left: 30px;
+    margin-right: 30px;
   }
 
   .features {
@@ -63,11 +66,13 @@
 
   .description {
     margin: 0px;
-    padding: 20px 0px 10px 0px;
+    padding: 20px 20px 0px 20px;
   }
 
   .stats {
     margin-top: 30px;
+    /* padding-bottom: 30px; */
+    padding: 0px 50px;
   }
 
   .stats-graph {
@@ -143,7 +148,7 @@
   }
 }
 
-@media (max-height: 900px) {
+@media (max-height: 900px) and (min-width: 1000px) {
   .card {
     transform: scale(0.73);
   }

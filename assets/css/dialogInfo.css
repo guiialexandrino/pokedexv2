@@ -34,6 +34,21 @@
   z-index: 1;
 }
 
+.card:after {
+  content: '';
+  display: block;
+  position: absolute;
+  text-align: center;
+  top: 30px;
+  left: 30px;
+  width: calc(100% - 61px);
+  height: calc(100% - 60px);
+  bottom: 0;
+  right: 0;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
 .compareButton {
   position: absolute;
   top: -55px;
@@ -52,11 +67,14 @@
   position: absolute;
   background-color: var(--mainColor);
   opacity: 0.6;
-  width: 100%;
-  height: 250px;
+  width: calc(100% - 60px);
+  height: 220px;
   z-index: -1;
-  top: 0px;
-  right: 0px;
+  top: 30px;
+  left: 30px;
+  border-radius: 10px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
 .pokeImageCard {
@@ -64,6 +82,7 @@
   top: -120px;
   right: 40px;
   width: 350px;
+  z-index: 200;
 }
 
 .type {
@@ -87,7 +106,7 @@
 .features {
   display: flex;
   justify-content: space-between;
-  padding: 20px 0px 10px 0px;
+  /* padding: 20px 0px 10px 0px; */
   width: calc(100% - 350px);
   min-height: 125px;
   margin-top: 20px;
@@ -116,10 +135,12 @@
   color: #333;
   font-size: 1.2rem;
   min-height: 130px;
+  padding: 0px 10px;
 }
 
 .stats {
   margin-top: 80px;
+  margin-bottom: 10px;
 }
 
 .stats-graph {
