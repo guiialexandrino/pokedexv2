@@ -1,0 +1,185 @@
+.show_dialog_vs {
+  position: absolute;
+  top: 0px;
+  height: 105vh;
+  width: 100%;
+  background-color: var(--mainColor);
+  z-index: 2001;
+  margin: 0 auto;
+}
+
+.dialogVs {
+  display: flex;
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+.cardVs {
+  display: block;
+  width: 100%;
+  position: relative;
+  background-color: white;
+  width: var(--widthCard);
+  border-radius: 10px;
+  box-shadow: 0px 20px 40px 0px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+#closeVsMode {
+  position: absolute;
+  top: -55px;
+  left: 15px;
+  cursor: pointer;
+}
+
+/* Informacoes iniciais */
+
+.vsMode_header {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    -200deg,
+    rgba(128, 240, 129, 0.9) 0%,
+    rgba(193, 203, 251, 0.9) 70%
+  );
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#vsMode_background {
+  position: absolute;
+  background-image: url('../img/pokeballPattern_opacity.png');
+  background-size: contain;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+#vs_label {
+  width: 40px;
+}
+
+.slot_card_template {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  gap: 10px;
+  width: 480px;
+  height: 235px;
+  margin: 20px 0px;
+  z-index: 4;
+}
+
+#foto_slot1 {
+  position: absolute;
+  height: 230px;
+  top: -50px;
+  left: 27%;
+  z-index: 2;
+}
+
+#foto_slot2 {
+  position: absolute;
+  height: 230px;
+  top: -50px;
+  right: 27%;
+  z-index: 2;
+}
+
+/* Status */
+
+.vsMode_stats {
+  display: block;
+  margin: 40px 50px;
+  width: 100%;
+  text-align: left;
+}
+
+.vsMode_stats > span {
+  font-size: 0.9rem;
+  margin-left: 60px;
+}
+
+.color_slot1,
+.color_slot2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color_slot1 {
+  margin-top: 10px;
+}
+
+.color_slot1 > strong {
+  width: 50px;
+}
+
+.color_slot2 > #transparent_label {
+  width: 50px;
+  color: transparent !important;
+}
+
+.color_slot1 > progress {
+  display: block;
+  position: relative;
+  height: 15px;
+  width: 81%;
+  -webkit-appearance: none;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+}
+
+.color_slot1 > progress::-webkit-progress-value {
+  background: rgba(128, 240, 129, 0.9) !important;
+}
+
+.color_slot1 > progress::-webkit-progress-bar {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.color_slot1 > progress:hover::-webkit-progress-value {
+  -webkit-filter: brightness(100%);
+}
+
+.color_slot1 > progress:hover::before {
+  content: '';
+}
+
+.color_slot2 > progress {
+  display: block;
+  position: relative;
+  height: 15px;
+  width: 81%;
+  -webkit-appearance: none;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+}
+
+.color_slot2 > progress::-webkit-progress-value {
+  background: rgba(193, 203, 251, 0.9) !important;
+}
+
+.color_slot2 > progress::-webkit-progress-bar {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.color_slot2 > progress:hover::-webkit-progress-value {
+  -webkit-filter: brightness(100%);
+}
+
+.color_slot2 > progress:hover::before {
+  content: '';
+}

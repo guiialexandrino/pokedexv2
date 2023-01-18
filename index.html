@@ -120,11 +120,128 @@
         </div>
       </div>
 
+      <!-- SHOW DIALOG vsMODE  -->
+      <div class="show_dialog_vs">
+        <div class="dialogVs">
+          <div class="cardVs">
+            <button id="closeVsMode">Fechar</button>
+            <!-- Header do vsmode: mostra pokes comparados -->
+            <div class="vsMode_header">
+              <div id="vsMode_background"></div>
+              <div id="info_slot1" class="slot_card_template">
+                <img
+                  id="foto_slot1"
+                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+                />
+                <h2 id="name_slot1">Slot1</h2>
+                <div id="type_slot1">
+                  <span>Tipo</span>
+                </div>
+              </div>
+              <div id="vs_label"><h1>Vs</h1></div>
+              <div id="info_slot2" class="slot_card_template">
+                <img
+                  id="foto_slot2"
+                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/373.png"
+                />
+                <h2 id="name_slot2">Slot2</h2>
+                <div id="type_slot2">
+                  <span>Tipo</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Comparação dos stats -->
+            <div class="vsMode_stats">
+              <!-- HP  -->
+              <div class="color_slot1">
+                <strong>HP:</strong>
+                <progress value="200" max="255"></progress>
+                <strong>30</strong>
+              </div>
+              <div class="color_slot2">
+                <strong id="transparent_label">HP:</strong>
+                <progress value="255" max="255"></progress>
+                <strong>100</strong>
+              </div>
+              <span id="result_HP">Poke2 é tem 10% mais de HP.</span>
+
+              <!-- ATAQUE  -->
+              <div class="color_slot1">
+                <strong>ATK:</strong>
+                <progress value="200" max="255"></progress>
+                <strong>30</strong>
+              </div>
+              <div class="color_slot2">
+                <strong id="transparent_label">ATK:</strong>
+                <progress value="255" max="255"></progress>
+                <strong>100</strong>
+              </div>
+              <span id="result_ATAQUE">Poke2 é tem 10% mais de ATAQUE.</span>
+
+              <!-- DEF  -->
+              <div class="color_slot1">
+                <strong>DEF:</strong>
+                <progress value="200" max="255"></progress>
+                <strong>30</strong>
+              </div>
+              <div class="color_slot2">
+                <strong id="transparent_label">DEF:</strong>
+                <progress value="255" max="255"></progress>
+                <strong>100</strong>
+              </div>
+              <span id="result_ATAQUE">Poke2 é tem 10% mais de DEF.</span>
+
+              <!-- SATK  -->
+              <div class="color_slot1">
+                <strong>SATK:</strong>
+                <progress value="200" max="255"></progress>
+                <strong>30</strong>
+              </div>
+              <div class="color_slot2">
+                <strong id="transparent_label">SATK:</strong>
+                <progress value="255" max="255"></progress>
+                <strong>100</strong>
+              </div>
+              <span id="result_ATAQUE">Poke2 é tem 10% mais de SATK.</span>
+
+              <!-- SDEF  -->
+              <div class="color_slot1">
+                <strong>SDEF:</strong>
+                <progress value="200" max="255"></progress>
+                <strong>30</strong>
+              </div>
+              <div class="color_slot2">
+                <strong id="transparent_label">SDEF:</strong>
+                <progress value="255" max="255"></progress>
+                <strong>100</strong>
+              </div>
+              <span id="result_ATAQUE">Poke2 é tem 10% mais de SDEF.</span>
+
+              <!-- SPD  -->
+              <div class="color_slot1">
+                <strong>SPD:</strong>
+                <progress value="200" max="255"></progress>
+                <strong>30</strong>
+              </div>
+              <div class="color_slot2">
+                <strong id="transparent_label">SPD:</strong>
+                <progress value="255" max="255"></progress>
+                <strong>100</strong>
+              </div>
+              <span id="result_ATAQUE">Poke2 é tem 10% mais de SPD.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- SHOW DIALOG Loading -->
       <div class="show_dialog_loading">
         <div class="loading"></div>
         <h2 id="loading-status">1%</h2>
       </div>
+
+      <!-- próxima div = Fim Wrapper -->
     </div>
 
     <!-- Compare footer -->
