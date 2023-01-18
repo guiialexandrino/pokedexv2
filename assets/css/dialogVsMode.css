@@ -1,4 +1,5 @@
 .show_dialog_vs {
+  display: none;
   position: absolute;
   top: 0px;
   height: 105vh;

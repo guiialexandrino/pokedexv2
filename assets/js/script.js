@@ -23,6 +23,7 @@ const closeInfoButton = document.querySelector('#closeInfoButton');
 const addToCompare = document.querySelector('#addToVsMode');
 const handleVsMode = document.querySelector('#handleVsMode');
 const dialogPokeInfo = document.querySelector('.show_dialog_info');
+const dialogVsMode = document.querySelector('.show_dialog_vs');
 const corDeFundo = (tipoPokemon) => {
   document.documentElement.style.setProperty(
     '--mainColor',
@@ -488,7 +489,8 @@ function deletePokeOfSlot(e, slot) {
 }
 
 function vsMode() {
-  console.log('clicou para comparar pokemons');
+  dialogPokeInfo.style.display = 'none';
+  dialogVsMode.style.display = 'flex';
 }
 
 /* Chama Método Inicial para carregar lista de pokes*/
