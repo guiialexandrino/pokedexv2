@@ -26,9 +26,9 @@ const handleVsMode = document.querySelector('#handleVsMode');
 const dialogPokeInfo = document.querySelector('.show_dialog_info');
 const dialogVsMode = document.querySelector('.show_dialog_vs');
 const closeVsMode = document.querySelector('#closeVsMode');
-const corDeFundo = (tipoPokemon) => {
+const corDeFundoDialogPoke = (tipoPokemon) => {
   document.documentElement.style.setProperty(
-    '--mainColor',
+    '--pokeColor',
     Utils.retornaCodigoCorDoTipo(tipoPokemon)
   );
 };
@@ -256,7 +256,7 @@ function loadPokeInfo(pokemon) {
   });
   _tipoPoke.innerHTML = Utils.retornaTipos(tiposEncontrados);
 
-  corDeFundo(tiposEncontrados[0]); // muda cor de fundo
+  corDeFundoDialogPoke(tiposEncontrados[0]); // muda cor de fundo
 
   _alturaPoke.innerHTML = pokemon.height / 10 + 'm';
 
@@ -289,8 +289,6 @@ function changeStatsInfo(e) {
   if (e.srcElement.id === 'ataqueE') info = `"${_ataqueEspecialPoke.value}"`;
   if (e.srcElement.id === 'defesaE') info = `"${_defesaEspecialPoke.value}"`;
   if (e.srcElement.id === 'velocidade') info = `"${_velocidadePoke.value}"`;
-
-  document.documentElement.style.setProperty('--statsText', info);
 }
 
 function handleCloseInfo(e) {
@@ -513,7 +511,7 @@ function vsMode(e) {
   dialogVsMode.style.display = 'flex';
   document.documentElement.style.setProperty(
     '--mainColor',
-    `rgba(23, 26, 51, 0.8)`
+    `rgba(23, 26, 51, 0.95)`
   );
 
   updateVsModeInterface();

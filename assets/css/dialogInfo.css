@@ -65,7 +65,7 @@
 
 .fundo_info {
   position: absolute;
-  background-color: var(--mainColor);
+  background-color: var(--pokeColor);
   opacity: 0.6;
   width: calc(100% - 60px);
   height: 220px;
@@ -97,7 +97,7 @@
 .type > span > span {
   font-weight: 600;
   font-size: 1.2rem;
-  background-color: var(--mainColor);
+  background-color: var(--pokeColor);
   padding: 8px;
   border-radius: 10px;
   margin-left: 20px;
@@ -113,7 +113,7 @@
 }
 
 .features > span {
-  color: var(--mainColor);
+  color: var(--pokeColor);
   font-weight: 600;
   font-size: 1.1rem;
   margin: 0px 5px 0px 5px;
@@ -187,7 +187,7 @@ progress {
 }
 
 progress::-webkit-progress-value {
-  background: var(--mainColor);
+  background: var(--pokeColor);
 }
 
 .progress-black::-webkit-progress-value {
