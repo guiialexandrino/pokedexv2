@@ -431,6 +431,14 @@ function addToComparePoke() {
       return poke.name === __selectedPoke.name;
     });
 
+    //adiciona o total de pontos
+    let totalPoints = 0;
+    searchPoke.stats.forEach((statsPoke) => {
+      totalPoints += statsPoke.base_stat;
+    });
+    searchPoke.stats.push({ base_stat: totalPoints });
+    console.log(searchPoke);
+
     if (__pokesToCompare.length < 2) {
       __pokesToCompare.push(searchPoke);
       const htmlUpdate = Utils.updateVsModeFooter(__pokesToCompare);
@@ -683,9 +691,9 @@ function refreshStats(
   //Mensagem informando %
   const percentualMaior = (maiorStats / menorStats).toFixed(2);
   const fixPercentual = (percentualMaior - 1) * 100;
-  let msg = `${pokemaiorStatsName} tem <b>${fixPercentual.toFixed(
-    2
-  )}%</b> a mais de ${statsType}.`;
+  let msg = `${pokemaiorStatsName} tem <b>${
+    String(fixPercentual.toFixed(2)).split('.')[0]
+  }%</b> a mais de ${statsType}.`;
   if (fixPercentual === 0)
     msg = `Os pokémons possuem o <b>mesmo</b> ${statsType}.`;
 
