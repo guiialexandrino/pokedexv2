@@ -14,8 +14,9 @@ let __dialogInfo = false;
 /* Elementos Reativos da página */
 
 const body = document.querySelector('body');
-const content = document.querySelector('.content');
 const header = document.querySelector('.headerNav');
+const content = document.querySelector('.content');
+const footer = document.querySelector('footer');
 const searchDiv = document.querySelector('.searchPoke');
 const input = document.getElementById('show-poke-list');
 const loading = document.querySelector('.show_dialog_loading');
@@ -164,6 +165,7 @@ async function getPokedex() {
     __pokedex[i].idNumber = Number(i) + 1;
   }
   createInterface();
+  footer.style.transform = 'translateY(0px)';
 }
 
 function createInterface() {
