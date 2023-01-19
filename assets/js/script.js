@@ -3,7 +3,7 @@ import Utils from './utils.js';
 
 /* Variaveis Globais */
 
-const __pokedexNumber = 23; //486
+const __pokedexNumber = 486; //486
 let __loadingProcess = 0;
 let __pokedex = [];
 let __pokedexBackup = [];
@@ -698,7 +698,6 @@ function refreshStats(
   //Mensagem informando %
   const percentualMaior = (maiorStats / menorStats).toFixed(2);
   const fixPercentual = (percentualMaior - 1) * 100;
-  console.log(fixPercentual);
   let msg = `${pokemaiorStatsName} tem <b>${fixPercentual.toFixed(
     2
   )}%</b> a mais de ${statsType}.`;
