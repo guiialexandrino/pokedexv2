@@ -42,3 +42,11 @@
   height: 100px;
   width: 100%;
 }
+
+.miniLogo {
+  height: 30px;
+  width: 150px;
+  background-image: url('../img/logo-dex.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
