@@ -51,7 +51,7 @@
   background: linear-gradient(
     -200deg,
     rgba(128, 240, 129, 0.9) 0%,
-    rgba(193, 203, 251, 0.9) 70%
+    rgba(193, 203, 251, 0.9) 0%
   );
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -100,6 +100,19 @@
   top: -50px;
   right: 27%;
   z-index: 2;
+}
+
+#type_slot1,
+#type_slot2 > span,
+span {
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#type_slot1,
+#type_slot2 > span:nth-child(1),
+span:nth-child(1) {
+  margin-right: 8px;
 }
 
 /* Status */
@@ -160,7 +173,7 @@
 }
 
 .color_slot1 > progress::-webkit-progress-value {
-  background: rgba(128, 240, 129, 0.9) !important;
+  background: var(--slot1) !important;
 }
 
 .color_slot1 > progress::-webkit-progress-bar {
@@ -187,7 +200,7 @@
 }
 
 .color_slot2 > progress::-webkit-progress-value {
-  background: rgba(193, 203, 251, 0.9) !important;
+  background: var(--slot2) !important;
 }
 
 .color_slot2 > progress::-webkit-progress-bar {

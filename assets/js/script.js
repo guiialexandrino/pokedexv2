@@ -512,6 +512,200 @@ function vsMode(e) {
     '--mainColor',
     `rgba(23, 26, 51, 0.8)`
   );
+
+  updateVsModeInterface();
+}
+
+function updateVsModeInterface() {
+  refreshImgs();
+  refreshNames();
+  refreshTypeAndColor();
+  checkSlotsColorAreTheSame();
+
+  refreshStats(
+    'HP',
+    '#hp_slot1_label',
+    '#hp_slot2_label',
+    '#hp_slot1',
+    '#hp_slot2',
+    '#result_HP',
+    0
+  );
+
+  refreshStats(
+    'ATK',
+    '#atk_slot1_label',
+    '#atk_slot2_label',
+    '#atk_slot1',
+    '#atk_slot2',
+    '#result_ATK',
+    1
+  );
+
+  refreshStats(
+    'DEF',
+    '#def_slot1_label',
+    '#def_slot2_label',
+    '#def_slot1',
+    '#def_slot2',
+    '#result_DEF',
+    2
+  );
+
+  refreshStats(
+    'SATK',
+    '#satk_slot1_label',
+    '#satk_slot2_label',
+    '#satk_slot1',
+    '#satk_slot2',
+    '#result_SATK',
+    3
+  );
+
+  refreshStats(
+    'SDEF',
+    '#sdef_slot1_label',
+    '#sdef_slot2_label',
+    '#sdef_slot1',
+    '#sdef_slot2',
+    '#result_SDEF',
+    4
+  );
+
+  refreshStats(
+    'SPD',
+    '#spd_slot1_label',
+    '#spd_slot2_label',
+    '#spd_slot1',
+    '#spd_slot2',
+    '#result_SPD',
+    5
+  );
+}
+
+function refreshImgs() {
+  document.querySelector('#foto_slot1').src =
+    __pokesToCompare[0].sprites.other['official-artwork'].front_default;
+  document.querySelector('#foto_slot2').src =
+    __pokesToCompare[1].sprites.other['official-artwork'].front_default;
+}
+
+function refreshNames() {
+  document.querySelector(
+    '#name_slot1'
+  ).innerHTML = `#${__pokesToCompare[0].id} - ${__pokesToCompare[0].name}`;
+  document.querySelector(
+    '#name_slot2'
+  ).innerHTML = `#${__pokesToCompare[1].id} - ${__pokesToCompare[1].name}`;
+}
+
+function refreshTypeAndColor() {
+  //atualiza tipo e cor
+  //slot1
+  const tiposPokeSlot1 = __pokesToCompare[0].types.map((item) => {
+    return item.type.name;
+  });
+
+  document.querySelector('#type_slot1').innerHTML =
+    Utils.retornaTipos(tiposPokeSlot1);
+
+  const corSlot1 = Utils.retornaCodigoCorDoTipo(tiposPokeSlot1[0]);
+  document.documentElement.style.setProperty('--slot1', corSlot1);
+
+  //slot2
+  const tiposPokeSlot2 = __pokesToCompare[1].types.map((item) => {
+    return item.type.name;
+  });
+
+  document.querySelector('#type_slot2').innerHTML =
+    Utils.retornaTipos(tiposPokeSlot2);
+
+  const corSlot2 = Utils.retornaCodigoCorDoTipo(tiposPokeSlot2[0]);
+  document.documentElement.style.setProperty('--slot2', corSlot2);
+
+  //atualiza fundo degrade
+  document.querySelector('.vsMode_header').style.background = `linear-gradient(
+    -200deg,
+    ${corSlot1} 0%,
+    ${corSlot2} 100%
+  )`;
+}
+
+function checkSlotsColorAreTheSame() {
+  const tiposPokeSlot1 = __pokesToCompare[0].types.map((item) => {
+    return item.type.name;
+  });
+
+  const color1 = Utils.retornaCodigoCorDoTipo(tiposPokeSlot1[0]);
+
+  const tiposPokeSlot2 = __pokesToCompare[1].types.map((item) => {
+    return item.type.name;
+  });
+
+  const color2 = Utils.retornaCodigoCorDoTipo(tiposPokeSlot2[0]);
+
+  if (color1 === color2) {
+    const newColor1 = color1.substring(0, color1.length - 4) + '0.3)';
+    document.documentElement.style.setProperty('--slot1', newColor1);
+
+    const newColor2 = color2.substring(0, color2.length - 4) + '1)';
+    document.documentElement.style.setProperty('--slot2', newColor2);
+
+    document.querySelector(
+      '.vsMode_header'
+    ).style.background = `linear-gradient(
+    -200deg,
+    ${newColor1} 0%,
+    ${newColor2} 100%
+  )`;
+  }
+}
+
+function refreshStats(
+  statsType,
+  slot1Label,
+  slot2Label,
+  slot1Progress,
+  slot2Progress,
+  result,
+  index
+) {
+  // Atualiza label com valores
+
+  const slot1 = __pokesToCompare[0].stats[index].base_stat;
+  const slot2 = __pokesToCompare[1].stats[index].base_stat;
+
+  document.querySelector(slot1Label).innerHTML = slot1;
+  document.querySelector(slot2Label).innerHTML = slot2;
+
+  // Atualiza o value do progress
+
+  document.querySelector(slot1Progress).value = slot1;
+  document.querySelector(slot2Progress).value = slot2;
+
+  //Checa qual poke tem maior Stats
+  const maiorStats = slot1 > slot2 ? slot1 : slot2;
+  const menorStats = slot1 < slot2 ? slot1 : slot2;
+  const pokemaiorStatsName =
+    __pokesToCompare[0].stats[index].base_stat === maiorStats
+      ? __pokesToCompare[0].name
+      : __pokesToCompare[1].name;
+
+  //Atualiza o valor do max do progress
+  document.querySelector(slot1Progress).max = maiorStats;
+  document.querySelector(slot2Progress).max = maiorStats;
+
+  //Mensagem informando %
+  const percentualMaior = (maiorStats / menorStats).toFixed(2);
+  const fixPercentual = (percentualMaior - 1) * 100;
+  console.log(fixPercentual);
+  let msg = `${pokemaiorStatsName} tem <b>${fixPercentual.toFixed(
+    2
+  )}%</b> a mais de ${statsType}.`;
+  if (fixPercentual === 0)
+    msg = `Os pokémons possuem o <b>mesmo</b> ${statsType}.`;
+
+  document.querySelector(result).innerHTML = msg;
 }
 
 function handleCloseVsMode(e) {

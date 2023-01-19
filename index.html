@@ -13,8 +13,8 @@
     <header class="headerNav">
       <div class="maxHeaderContent">
         <h2>
-          <span class="primaryColor">Poké</span
-          ><span class="secondaryColor">dex</span>
+          <span class="primaryColor">Poké</span>
+          <span class="secondaryColor">dex</span>
         </h2>
       </div>
     </header>
@@ -129,10 +129,7 @@
             <div class="vsMode_header">
               <div id="vsMode_background"></div>
               <div id="info_slot1" class="slot_card_template">
-                <img
-                  id="foto_slot1"
-                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
-                />
+                <img id="foto_slot1" />
                 <h2 id="name_slot1">Slot1</h2>
                 <div id="type_slot1">
                   <span>Tipo</span>
@@ -140,10 +137,7 @@
               </div>
               <div id="vs_label"><h1>Vs</h1></div>
               <div id="info_slot2" class="slot_card_template">
-                <img
-                  id="foto_slot2"
-                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/373.png"
-                />
+                <img id="foto_slot2" />
                 <h2 id="name_slot2">Slot2</h2>
                 <div id="type_slot2">
                   <span>Tipo</span>
@@ -157,13 +151,13 @@
               <div class="flexStats">
                 <div class="color_slot1">
                   <strong>HP:</strong>
-                  <progress value="200" max="255"></progress>
-                  <strong>30</strong>
+                  <progress id="hp_slot1" value="200" max="255"></progress>
+                  <strong id="hp_slot1_label">30</strong>
                 </div>
                 <div class="color_slot2">
                   <strong id="transparent_label">HP:</strong>
-                  <progress value="255" max="255"></progress>
-                  <strong>100</strong>
+                  <progress id="hp_slot2" value="255" max="255"></progress>
+                  <strong id="hp_slot2_label">100</strong>
                 </div>
                 <span id="result_HP">Poke2 é tem 10% mais de HP.</span>
               </div>
@@ -172,75 +166,75 @@
               <div class="flexStats">
                 <div class="color_slot1">
                   <strong>DEF:</strong>
-                  <progress value="200" max="255"></progress>
-                  <strong>30</strong>
+                  <progress id="def_slot1" value="200" max="255"></progress>
+                  <strong id="def_slot1_label">30</strong>
                 </div>
                 <div class="color_slot2">
                   <strong id="transparent_label">DEF:</strong>
-                  <progress value="255" max="255"></progress>
-                  <strong>100</strong>
+                  <progress id="def_slot2" value="255" max="255"></progress>
+                  <strong id="def_slot2_label">100</strong>
                 </div>
-                <span id="result_ATAQUE">Poke2 é tem 10% mais de DEF.</span>
+                <span id="result_DEF">Poke2 é tem 10% mais de DEF.</span>
               </div>
 
               <!-- ATAQUE  -->
               <div class="flexStats">
                 <div class="color_slot1">
                   <strong>ATK:</strong>
-                  <progress value="200" max="255"></progress>
-                  <strong>30</strong>
+                  <progress id="atk_slot1" value="200" max="255"></progress>
+                  <strong id="atk_slot1_label">30</strong>
                 </div>
                 <div class="color_slot2">
                   <strong id="transparent_label">ATK:</strong>
-                  <progress value="255" max="255"></progress>
-                  <strong>100</strong>
+                  <progress id="atk_slot2" value="255" max="255"></progress>
+                  <strong id="atk_slot2_label">100</strong>
                 </div>
-                <span id="result_ATAQUE">Poke2 é tem 10% mais de ATAQUE.</span>
+                <span id="result_ATK">Poke2 é tem 10% mais de ATAQUE.</span>
               </div>
 
               <!-- SATK  -->
               <div class="flexStats">
                 <div class="color_slot1">
                   <strong>SATK:</strong>
-                  <progress value="200" max="255"></progress>
-                  <strong>30</strong>
+                  <progress id="satk_slot1" value="200" max="255"></progress>
+                  <strong id="satk_slot1_label">30</strong>
                 </div>
                 <div class="color_slot2">
                   <strong id="transparent_label">SATK:</strong>
-                  <progress value="255" max="255"></progress>
-                  <strong>100</strong>
+                  <progress id="satk_slot2" value="255" max="255"></progress>
+                  <strong id="satk_slot2_label">100</strong>
                 </div>
-                <span id="result_ATAQUE">Poke2 é tem 10% mais de SATK.</span>
+                <span id="result_SATK">Poke2 é tem 10% mais de SATK.</span>
               </div>
 
               <!-- SDEF  -->
               <div class="flexStats">
                 <div class="color_slot1">
                   <strong>SDEF:</strong>
-                  <progress value="200" max="255"></progress>
-                  <strong>30</strong>
+                  <progress id="sdef_slot1" value="200" max="255"></progress>
+                  <strong id="sdef_slot1_label">30</strong>
                 </div>
                 <div class="color_slot2">
                   <strong id="transparent_label">SDEF:</strong>
-                  <progress value="255" max="255"></progress>
-                  <strong>100</strong>
+                  <progress id="sdef_slot2" value="255" max="255"></progress>
+                  <strong id="sdef_slot2_label">100</strong>
                 </div>
-                <span id="result_ATAQUE">Poke2 é tem 10% mais de SDEF.</span>
+                <span id="result_SDEF">Poke2 é tem 10% mais de SDEF.</span>
               </div>
 
               <!-- VEL -->
               <div class="flexStats">
                 <div class="color_slot1">
                   <strong>SPD:</strong>
-                  <progress value="200" max="255"></progress>
-                  <strong>30</strong>
+                  <progress id="spd_slot1" value="200" max="255"></progress>
+                  <strong id="spd_slot1_label">30</strong>
                 </div>
                 <div class="color_slot2">
                   <strong id="transparent_label">SPD:</strong>
-                  <progress value="255" max="255"></progress>
-                  <strong>100</strong>
+                  <progress id="spd_slot2" value="255" max="255"></progress>
+                  <strong id="spd_slot2_label">100</strong>
                 </div>
-                <span id="result_ATAQUE">Poke2 é tem 10% mais de SPD.</span>
+                <span id="result_SPD">Poke2 é tem 10% mais de SPD.</span>
               </div>
               <!-- Fim -->
             </div>
