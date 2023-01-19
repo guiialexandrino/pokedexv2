@@ -588,8 +588,30 @@ function updateVsModeInterface() {
 function refreshImgs() {
   document.querySelector('#foto_slot1').src =
     __pokesToCompare[0].sprites.other['official-artwork'].front_default;
+
   document.querySelector('#foto_slot2').src =
     __pokesToCompare[1].sprites.other['official-artwork'].front_default;
+
+  //Adiciona efeito de voador
+  for (let i = 0; i < __pokesToCompare.length; i++) {
+    const tipo = __pokesToCompare[i].types.map((item) => {
+      return item.type.name;
+    });
+
+    const habilidadesEncontradas = __pokesToCompare[i].abilities.map((item) => {
+      return item.ability.name;
+    });
+
+    if (
+      tipo.includes('flying') ||
+      habilidadesEncontradas.includes('levitate')
+    ) {
+      document.querySelector(`#foto_slot${i + 1}`).style.animation =
+        'flyingPoke 2s ease-in-out infinite';
+    } else {
+      document.querySelector(`#foto_slot${i + 1}`).style.animation = '';
+    }
+  }
 }
 
 function refreshNames() {
