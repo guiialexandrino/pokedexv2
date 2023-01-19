@@ -159,7 +159,6 @@ async function getPokedex() {
     __pokedex[i].idNumber = Number(i) + 1;
   }
   createInterface();
-  footer.style.transform = 'translateY(0px)';
 }
 
 function createInterface() {
@@ -173,6 +172,7 @@ function createInterface() {
     const card = document.querySelector(`#${poke.name}`);
     const info = document.querySelector(`#${poke.name}-info`);
     const number = document.querySelector(`#${poke.name}-number`);
+    const addVsMode = document.querySelector(`#${poke.name}-vsMode`);
 
     let cor = Utils.retornaCodigoCorDoTipo(poke.type);
 
@@ -194,11 +194,19 @@ function createInterface() {
     card.addEventListener('click', (e) => {
       showInfoCard(poke, index, e);
     });
+
+    addVsMode.addEventListener('click', () => {
+      __selectedPoke = { ...poke, id: index };
+      addToComparePoke();
+    });
   });
 }
 
 function showInfoCard(poke, index, e) {
+  if (e.target.id.includes('vsMode')) return;
+
   __selectedPoke = { ...poke, id: index };
+
   if (e.view.outerWidth <= 1000) {
     body.style.overflowY = 'scroll';
     body.style.overflowX = 'hidden';
@@ -217,6 +225,7 @@ function showInfoCard(poke, index, e) {
   __dialogInfo = true;
   dialogPokeInfo.style.display = 'flex';
   header.style.transform = 'translateY(0px)';
+
   if (window.pageYOffset < 220) {
     document.querySelector('.maxHeaderContent').appendChild(searchDiv);
   }
@@ -422,6 +431,8 @@ function removeElements() {
 
 /* VS MODE Methods */
 function addToComparePoke() {
+  footer.style.transform = 'translateY(0px)';
+
   const check = __pokesToCompare.filter((poke) => {
     return poke.name === __selectedPoke.name;
   });
@@ -483,6 +494,11 @@ function deletePokeOfSlot(e, slot) {
   });
   if (slot === 1) slot1.innerHTML = 'Sem Pokémon';
   else slot2.innerHTML = 'Sem Pokémon';
+
+  if (__pokesToCompare.length === 0) {
+    footer.style.transform = 'translateY(60px)';
+  }
+
   handleVsMode.disabled = true;
 }
 
