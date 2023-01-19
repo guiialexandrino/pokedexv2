@@ -425,6 +425,7 @@ function displayNames(value, e) {
   // el.scrollIntoView();
   // window.scrollTo(0, window.scrollY - 100);
   header.style.transform = 'translateY(-60px)';
+  dialogVsMode.style.display = 'none';
 
   showInfoCard(__pokedex[0], 0, e);
   removeElements();
