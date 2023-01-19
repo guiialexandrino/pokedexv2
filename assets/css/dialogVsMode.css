@@ -80,7 +80,7 @@
   align-items: center;
   justify-content: end;
   gap: 10px;
-  width: 480px;
+  width: 450px;
   height: 235px;
   margin: 20px 0px;
   z-index: 4;
@@ -113,6 +113,22 @@ span {
 #type_slot2 > span:nth-child(1),
 span:nth-child(1) {
   margin-right: 8px;
+}
+
+#vs_label {
+  width: 100px;
+}
+
+.vsModeImg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../img/vsBlack.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 100px;
+  height: 80px;
 }
 
 /* Status */
