@@ -21,6 +21,7 @@
   align-items: center;
   background-color: #fff;
   transition: all ease-in-out 0.3s;
+  z-index: 9;
 }
 
 .miniCardPoke > .outlinedEffect {
@@ -33,6 +34,57 @@
   border-style: solid;
   border-width: 1px;
   border-color: rgba(0, 0, 0, 0.2);
+}
+
+.miniCardPoke > .fastAddVsMode {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  height: 23px;
+  width: 23px;
+  background-image: url('../img/vsBlack.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.3;
+}
+
+.fastAddVsMode:hover {
+  background-image: url('../img/vsWhite.png');
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 1));
+  opacity: 1;
+  transition: all ease-in-out 0.3s;
+}
+
+.fastAddVsMode:hover::after {
+  content: 'Add VSMode';
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: rgba(256, 256, 256, 0.9);
+  width: 100px;
+  height: 30px;
+  top: 30px;
+  left: -40px;
+  border-radius: 5px;
+  animation: fadeIn 0.3s;
+}
+
+.fastAddVsMode:not(:hover) {
+  transition: all ease-in-out 0.3s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .miniCardPoke > .backgroundType {

@@ -133,6 +133,7 @@ function retornaMiniCards(array) {
     html += `
     <div id="${item.name}" class="miniCardPoke">
     <div class="outlinedEffect"></div>
+    <div id="${item.name}-vsMode" class="fastAddVsMode"></div>
     <div class="backgroundType" style="background-image: url('../assets/img/poke-types/${imgFundoPorTipo(
       tipos[0]
     )}') !important; "></div>
