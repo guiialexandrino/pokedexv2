@@ -525,6 +525,7 @@ function vsMode(e) {
 }
 
 function updateVsModeInterface() {
+  calculateScore();
   refreshImgs();
   refreshNames();
   refreshTypeAndColor();
@@ -601,6 +602,26 @@ function updateVsModeInterface() {
   );
 }
 
+function calculateScore() {
+  let score_slot1 = 0;
+  let score_slot2 = 0;
+
+  const poke1 = __pokesToCompare[0].stats;
+  const poke2 = __pokesToCompare[1].stats;
+
+  poke1.forEach((stats, index) => {
+    if (stats.base_stat > poke2[index].base_stat) score_slot1++;
+    else if (stats.base_stat < poke2[index].base_stat) score_slot2++;
+    else if (stats.base_stat === poke2[index].base_stat) {
+      score_slot1 = score_slot1;
+      score_slot2 = score_slot2;
+    }
+  });
+
+  document.querySelector('#scoreSlot1').innerHTML = score_slot1;
+  document.querySelector('#scoreSlot2').innerHTML = score_slot2;
+}
+
 function refreshImgs() {
   document.querySelector('#foto_slot1').src =
     __pokesToCompare[0].sprites.other['official-artwork'].front_default;
@@ -665,9 +686,9 @@ function refreshTypeAndColor() {
 
   //atualiza fundo degrade
   document.querySelector('.vsMode_header').style.background = `linear-gradient(
-    -200deg,
-    ${corSlot1} 0%,
-    ${corSlot2} 100%
+    -225deg,
+    ${corSlot1} 10%,
+    ${corSlot2} 90%
   )`;
 }
 
