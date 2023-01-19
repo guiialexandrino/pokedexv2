@@ -61,12 +61,12 @@
 
 #vsMode_background {
   position: absolute;
-  /* background-image: url('../img/pokeballPattern_opacity.png'); */
+  background-image: url('../img/pokeballPattern_opacity.png');
   background-size: contain;
   z-index: 3;
   width: 100%;
   height: 100%;
-  opacity: 0.4;
+  opacity: 0.5;
 }
 
 #vs_label {

@@ -191,21 +191,21 @@ function createInterface() {
       number.classList.remove('addWhiteColor');
     });
 
-    card.addEventListener('click', (e) => {
-      showInfoCard(poke, index, e);
-    });
-
     addVsMode.addEventListener('click', () => {
       __selectedPoke = { ...poke, id: index };
       addToComparePoke();
+    });
+
+    card.addEventListener('click', (e) => {
+      showInfoCard(poke, index, e);
     });
   });
 }
 
 function showInfoCard(poke, index, e) {
-  if (e.target.id.includes('vsMode')) return;
-
   __selectedPoke = { ...poke, id: index };
+
+  if (e.target.id.includes('vsMode')) return;
 
   if (e.view.outerWidth <= 1000) {
     body.style.overflowY = 'scroll';
