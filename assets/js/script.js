@@ -437,7 +437,6 @@ function addToComparePoke() {
       totalPoints += statsPoke.base_stat;
     });
     searchPoke.stats.push({ base_stat: totalPoints });
-    console.log(searchPoke);
 
     if (__pokesToCompare.length < 2) {
       __pokesToCompare.push(searchPoke);
@@ -573,6 +572,16 @@ function updateVsModeInterface() {
     '#spd_slot2',
     '#result_SPD',
     5
+  );
+
+  refreshStats(
+    'Pontos',
+    '#tot_slot1_label',
+    '#tot_slot2_label',
+    '#tot_slot1',
+    '#tot_slot2',
+    '#result_TOT',
+    6
   );
 }
 
