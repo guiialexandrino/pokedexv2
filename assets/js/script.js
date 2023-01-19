@@ -442,10 +442,12 @@ function addToComparePoke() {
       return poke.name === __selectedPoke.name;
     });
 
-    //adiciona o total de pontos
+    //adiciona o total de pontos - 6 (hp,def,atk,satk,sdef,spd)
     let totalPoints = 0;
-    searchPoke.stats.forEach((statsPoke) => {
-      totalPoints += statsPoke.base_stat;
+    searchPoke.stats.forEach((statsPoke, index) => {
+      if (index < 7) {
+        totalPoints += statsPoke.base_stat;
+      }
     });
     searchPoke.stats.push({ base_stat: totalPoints });
 
@@ -609,14 +611,14 @@ function calculateScore() {
   const poke1 = __pokesToCompare[0].stats;
   const poke2 = __pokesToCompare[1].stats;
 
-  for (let i = 0; i < 7; i++) {
-    if (poke1[i].base_stat > poke2[i].base_stat) score_slot1++;
-    else if (poke1[i].base_stat < poke2[i].base_stat) score_slot2++;
-    else if (poke1[i].base_stat === poke2[i].base_stat) {
+  poke1.forEach((stats, index) => {
+    if (stats.base_stat > poke2[index].base_stat) score_slot1++;
+    else if (stats.base_stat < poke2[index].base_stat) score_slot2++;
+    else if (stats.base_stat === poke2[index].base_stat) {
       score_slot1 = score_slot1;
       score_slot2 = score_slot2;
     }
-  }
+  });
 
   document.querySelector('#scoreSlot1').innerHTML = score_slot1;
   document.querySelector('#scoreSlot2').innerHTML = score_slot2;
