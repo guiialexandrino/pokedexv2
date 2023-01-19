@@ -55,12 +55,6 @@ const slot2 = document.querySelector('#slot2');
 
 /* Adiciona Eventos */
 
-_hpPoke.addEventListener('mouseenter', changeStatsInfo);
-_ataquePoke.addEventListener('mouseenter', changeStatsInfo);
-_defesaPoke.addEventListener('mouseenter', changeStatsInfo);
-_ataqueEspecialPoke.addEventListener('mouseenter', changeStatsInfo);
-_defesaEspecialPoke.addEventListener('mouseenter', changeStatsInfo);
-_velocidadePoke.addEventListener('mouseenter', changeStatsInfo);
 closeInfoButton.addEventListener('click', handleCloseInfo);
 addToCompare.addEventListener('click', addToComparePoke);
 handleVsMode.addEventListener('click', vsMode);
@@ -279,16 +273,6 @@ function loadPokeInfo(pokemon) {
 
   /* tratamento para outliers */
   tratamentoOutliers();
-}
-
-function changeStatsInfo(e) {
-  let info = '';
-  if (e.srcElement.id === 'hp') info = `"${_hpPoke.value}"`;
-  if (e.srcElement.id === 'ataque') info = `"${_ataquePoke.value}"`;
-  if (e.srcElement.id === 'defesa') info = `"${_defesaPoke.value}"`;
-  if (e.srcElement.id === 'ataqueE') info = `"${_ataqueEspecialPoke.value}"`;
-  if (e.srcElement.id === 'defesaE') info = `"${_defesaEspecialPoke.value}"`;
-  if (e.srcElement.id === 'velocidade') info = `"${_velocidadePoke.value}"`;
 }
 
 function handleCloseInfo(e) {
