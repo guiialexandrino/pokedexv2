@@ -3,7 +3,7 @@ import Utils from './utils.js';
 
 /* Variaveis Globais */
 
-const __pokedexNumber = 486; //486
+const __pokedexNumber = 20; //486
 let __loadingProcess = 0;
 let __pokedex = [];
 let __pokedexBackup = [];
@@ -508,12 +508,15 @@ function vsMode(e) {
   if (e.view.outerWidth <= 1000) {
     body.style.overflowY = 'scroll';
     body.style.overflowX = 'hidden';
+    content.style.display = 'none';
     body.scrollIntoView();
   } else {
     body.style.overflowY = 'hidden';
     body.style.overflowX = 'hidden';
+    content.style.display = 'flex';
   }
 
+  __dialogInfo = true;
   dialogPokeInfo.style.display = 'none';
   header.style.transform = 'translateY(0px)';
   document.querySelector('.maxHeaderContent').appendChild(searchDiv);
