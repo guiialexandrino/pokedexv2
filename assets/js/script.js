@@ -3,7 +3,7 @@ import Utils from './utils.js';
 
 /* Variaveis Globais */
 
-const __pokedexNumber = 20; //486
+const __pokedexNumber = 151; //486
 let __loadingProcess = 0;
 let __pokedex = [];
 let __pokedexBackup = [];
@@ -79,7 +79,7 @@ dialogVsMode.style.top = `${window.pageYOffset + 30}px`;
 
 function scrolling(e) {
   //Condição para mobile e normal atualizar o top do dialogPoke Info
-  if (e.target.defaultView.outerWidth > 1000) {
+  if (e.target.defaultView.outerWidth > 1100) {
     dialogPokeInfo.style.top = `${window.pageYOffset + 30}px`;
     dialogVsMode.style.top = `${window.pageYOffset + 30}px`;
   } else {
@@ -207,7 +207,7 @@ function showInfoCard(poke, index, e) {
 
   if (e.target.id.includes('vsMode')) return;
 
-  if (e.view.outerWidth <= 1000) {
+  if (e.view.outerWidth <= 1100) {
     body.style.overflowY = 'scroll';
     body.style.overflowX = 'hidden';
     content.style.display = 'none';
@@ -294,7 +294,7 @@ function handleCloseInfo(e) {
       `rgba(23, 26, 51, 0.95)`
     );
 
-    if (e.view.outerWidth <= 1000) {
+    if (e.view.outerWidth <= 1100) {
       const el = document.querySelector(`#${__selectedPoke.name}`);
       el.scrollIntoView();
       window.scrollTo(0, window.scrollY - 100);
@@ -504,8 +504,9 @@ function deletePokeOfSlot(e, slot) {
   handleVsMode.disabled = true;
 }
 
+/*Método executado ao clicar para comparar os pokes VS Mode */
 function vsMode(e) {
-  if (e.view.outerWidth <= 1000) {
+  if (e.view.outerWidth <= 1100) {
     body.style.overflowY = 'scroll';
     body.style.overflowX = 'hidden';
     content.style.display = 'none';
@@ -518,8 +519,12 @@ function vsMode(e) {
 
   __dialogInfo = true;
   dialogPokeInfo.style.display = 'none';
+
+  // faz aparecer o nav header
   header.style.transform = 'translateY(0px)';
   document.querySelector('.maxHeaderContent').appendChild(searchDiv);
+
+  //liga o dialog VS Mode
   dialogVsMode.style.display = 'flex';
   document.documentElement.style.setProperty(
     '--mainColor',
@@ -775,13 +780,26 @@ function refreshStats(
 
 function handleCloseVsMode(e) {
   dialogVsMode.style.display = 'none';
-  header.style.transform = 'translateY(-60px)';
-  content.insertBefore(searchDiv, content.children[1]);
   body.style.overflowY = 'scroll';
+  header.style.transform = 'translateY(-60px)';
+  content.style.display = 'flex';
+  content.insertBefore(searchDiv, content.children[1]);
   document.documentElement.style.setProperty(
     '--mainColor',
     `rgba(23, 26, 51, 0.95)`
   );
+
+  if (e.view.outerWidth <= 1100 && __pokesToCompare.length > 0) {
+    if (__pokesToCompare[0].name) {
+      const el = document.querySelector(`#${__pokesToCompare[0].name}`);
+      el.scrollIntoView();
+      window.scrollTo(0, window.scrollY - 90);
+    } else if (!__pokesToCompare[0].name && __pokesToCompare[1].name) {
+      const el = document.querySelector(`#${__pokesToCompare[1].name}`);
+      el.scrollIntoView();
+      window.scrollTo(0, window.scrollY - 90);
+    }
+  }
 }
 
 /* Chama Método Inicial para carregar lista de pokes*/
