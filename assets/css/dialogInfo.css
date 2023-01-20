@@ -65,6 +65,8 @@
 
 .fundo_info {
   position: absolute;
+  background-image: url('../img/pokeballPattern_opacity.png');
+  background-size: contain;
   background-color: var(--pokeColor);
   opacity: 0.6;
   width: calc(100% - 60px);
