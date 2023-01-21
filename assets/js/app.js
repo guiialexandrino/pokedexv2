@@ -80,6 +80,12 @@ function scrolling(e) {
   }
 }
 
+function resizeWindow(e) {
+  const event = { view: e.currentTarget };
+  handleCloseInfo(event);
+  handleCloseVsMode(event);
+}
+
 /* Métodos iniciais para carregar pokes */
 
 async function getGeneralInfoPokes(id) {
@@ -243,21 +249,9 @@ function handleCloseInfo(e) {
   }
 }
 
-function resizeWindow(e) {
-  const event = { view: e.currentTarget };
-  handleCloseInfo(event);
-  handleCloseVsMode(event);
-}
-
 //Auto complete Methods
 function autoCompleteMethod() {
   __pokedex = [...__pokedexBackup];
-
-  if (input.value === '') {
-    createInterface();
-    removeElements();
-    return;
-  }
 
   removeElements();
   for (let i of __pokedex) {
