@@ -1,7 +1,7 @@
 .show_dialog_vs {
   display: none;
   position: absolute;
-  top: 0px;
+  top: 30px;
   height: 105vh;
   width: 100%;
   background-color: var(--mainColor);

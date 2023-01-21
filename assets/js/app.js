@@ -55,9 +55,6 @@ function cleanInput() {
   removeElements();
 }
 
-dialogPokeInfo.style.top = `${window.pageYOffset + 30}px`;
-dialogVsMode.style.top = `${window.pageYOffset + 30}px`;
-
 function scrolling(e) {
   //Condição para mobile e normal atualizar o top do dialogPoke Info
   if (e.target.defaultView.outerWidth > 1100) {
@@ -145,7 +142,6 @@ async function getPokedex() {
       __pokedex[i].name[0].toUpperCase() + __pokedex[i].name.substring(1);
     __pokedex[i].idNumber = Number(i) + 1;
   }
-  createInterface();
 }
 
 function createInterface() {
@@ -247,62 +243,6 @@ function handleCloseInfo(e) {
 
     __dialogInfo = false;
   }
-}
-
-//Auto complete Methods
-function autoCompleteMethod() {
-  __pokedex = [...__pokedexBackup];
-
-  removeElements();
-  for (let i of __pokedex) {
-    //convert input to lowercase and compare with each string
-
-    if (
-      i.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
-      input.value != ''
-    ) {
-      //create li element
-      let listItem = document.createElement('li');
-
-      //One common class name
-      listItem.classList.add('list-items');
-      listItem.style.cursor = 'pointer';
-      listItem.onclick = function (e) {
-        displayNames(i.name, e);
-      };
-
-      //Display matched part in bold
-      let word = '<b>' + i.name.substr(0, input.value.length) + '</b>';
-      word += i.name.substr(input.value.length);
-
-      //display the value in array
-      listItem.innerHTML = word;
-      document.querySelector('.list').appendChild(listItem);
-    }
-  }
-}
-
-function displayNames(value, e) {
-  input.value = value;
-  const showSearch = __pokedex.filter(
-    (poke) =>
-      poke.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
-      input.value != ''
-  );
-  __pokedex = showSearch;
-
-  header.style.transform = 'translateY(-60px)';
-  dialogVsMode.style.display = 'none';
-
-  showInfoCard(__pokedex[0], 0, e);
-  removeElements();
-}
-
-function removeElements() {
-  let items = document.querySelectorAll('.list-items');
-  items.forEach((item) => {
-    item.remove();
-  });
 }
 
 /* VS MODE Methods */
@@ -434,7 +374,65 @@ function handleCloseVsMode(e) {
   }
 }
 
+//Auto complete Methods
+function autoCompleteMethod() {
+  __pokedex = [...__pokedexBackup];
+
+  removeElements();
+  for (let i of __pokedex) {
+    //convert input to lowercase and compare with each string
+
+    if (
+      i.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
+      input.value != ''
+    ) {
+      //create li element
+      let listItem = document.createElement('li');
+
+      //One common class name
+      listItem.classList.add('list-items');
+      listItem.style.cursor = 'pointer';
+      listItem.onclick = function (e) {
+        displayNames(i.name, e);
+      };
+
+      //Display matched part in bold
+      let word = '<b>' + i.name.substr(0, input.value.length) + '</b>';
+      word += i.name.substr(input.value.length);
+
+      //display the value in array
+      listItem.innerHTML = word;
+      document.querySelector('.list').appendChild(listItem);
+    }
+  }
+}
+
+function displayNames(value, e) {
+  input.value = value;
+  const showSearch = __pokedex.filter(
+    (poke) =>
+      poke.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
+      input.value != ''
+  );
+  __pokedex = showSearch;
+
+  header.style.transform = 'translateY(-60px)';
+  dialogVsMode.style.display = 'none';
+
+  showInfoCard(__pokedex[0], 0, e);
+  removeElements();
+}
+
+function removeElements() {
+  let items = document.querySelectorAll('.list-items');
+  items.forEach((item) => {
+    item.remove();
+  });
+}
+
 /* Chama Método Inicial para carregar lista de pokes*/
 
 await getPokedex();
 __pokedexBackup = [...__pokedex]; // cópia - para resetar as buscas
+
+createInterface();
