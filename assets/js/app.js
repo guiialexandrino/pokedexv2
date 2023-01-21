@@ -1,12 +1,11 @@
 /* Importações */
-import InterfaceUtils from './utils/interfaceUtils.js';
-import InterfaceInfoPoke from './utils/interfaceInfoPoke.js';
-import InterfaceVsMode from './utils/interfaceVsMode.js';
+import InterfaceUtils from './interface/interfaceUtils.js';
+import generateInfoPoke from './interface/generateInfoPoke.js';
+import generateVsMode from './interface/generateVsMode.js';
+import Api from './utils/connectApi.js';
 
 /* Variaveis Globais */
 
-const __pokedexNumber = 151; //486
-let __loadingProcess = 0;
 let __pokedex = [];
 let __pokedexBackup = [];
 let __selectedPoke = {};
@@ -41,9 +40,9 @@ addToCompare.addEventListener('click', addToComparePoke);
 handleVsMode.addEventListener('click', vsMode);
 closeVsMode.addEventListener('click', handleCloseVsMode);
 input.addEventListener('keyup', autoCompleteMethod);
-window.addEventListener('resize', resizeWindow);
 body.addEventListener('click', cleanInput);
 window.addEventListener('scroll', scrolling);
+window.addEventListener('resize', resizeWindow);
 
 /* Métodos para restaurar padrão */
 
@@ -83,69 +82,7 @@ function resizeWindow(e) {
   handleCloseVsMode(event);
 }
 
-/* Métodos iniciais para carregar pokes */
-
-async function getGeneralInfoPokes(id) {
-  return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((response) => {
-    __loadingProcess++;
-
-    document.querySelector('#loading-status').innerHTML = `${Math.round(
-      (__loadingProcess / (__pokedexNumber * 2)) * 100
-    )} %`;
-
-    return response.json();
-  });
-}
-
-async function addExtraInfo(id) {
-  return fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then(
-    (response) => {
-      __loadingProcess++;
-
-      document.querySelector('#loading-status').innerHTML = `${Math.round(
-        (__loadingProcess / (__pokedexNumber * 2)) * 100
-      )} %`;
-
-      return response.json();
-    }
-  );
-}
-
-async function getPokedex() {
-  const pokemonPromises = [];
-  const pokemonInfoPromises = [];
-
-  loading.style.display = 'flex';
-  for (let i = 1; i <= __pokedexNumber; i++) {
-    pokemonPromises.push(getGeneralInfoPokes(i));
-  }
-
-  await Promise.all(pokemonPromises).then((pokes) => {
-    __pokedex = pokes;
-  });
-
-  for (let i = 1; i <= __pokedexNumber; i++) {
-    pokemonInfoPromises.push(addExtraInfo(i));
-  }
-
-  await Promise.all(pokemonInfoPromises).then((infoPokes) => {
-    infoPokes.forEach((poke, index) => {
-      Object.assign(__pokedex[index], {
-        genera: poke.genera,
-        flavor_text_entries: poke.flavor_text_entries,
-      });
-    });
-  });
-
-  for (let i in __pokedex) {
-    __pokedex[i].name =
-      __pokedex[i].name[0].toUpperCase() + __pokedex[i].name.substring(1);
-    __pokedex[i].idNumber = Number(i) + 1;
-  }
-}
-
 function createInterface() {
-  // removeElements();
   setTimeout(() => (loading.style.display = 'none'), 300);
   const utils = InterfaceUtils.retornaMiniCards(__pokedex);
   _maxContentCards.innerHTML = utils.html;
@@ -202,7 +139,7 @@ function showInfoCard(poke, index, e) {
   }
 
   const showPokeInfo = __pokedex[__selectedPoke.id];
-  InterfaceInfoPoke.loadPokeInfo(showPokeInfo);
+  generateInfoPoke.loadPokeInfo(showPokeInfo);
 
   //exibe dados ao clicar no card
   __dialogInfo = true;
@@ -347,7 +284,7 @@ function vsMode(e) {
     `rgba(23, 26, 51, 0.95)`
   );
 
-  InterfaceVsMode.updateVsModeInterface(__pokesToCompare);
+  generateVsMode.updateVsModeInterface(__pokesToCompare);
 }
 
 function handleCloseVsMode(e) {
@@ -432,7 +369,7 @@ function removeElements() {
 
 /* Chama Método Inicial para carregar lista de pokes*/
 
-await getPokedex();
+__pokedex = await Api.getPokedex();
 __pokedexBackup = [...__pokedex]; // cópia - para resetar as buscas
 
 createInterface();

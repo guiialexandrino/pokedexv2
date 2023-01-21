@@ -90,11 +90,13 @@ function calculateScore() {
   const poke2 = __pokesToCompare[1].stats;
 
   poke1.forEach((stats, index) => {
-    if (stats.base_stat > poke2[index].base_stat) score_slot1++;
-    else if (stats.base_stat < poke2[index].base_stat) score_slot2++;
-    else if (stats.base_stat === poke2[index].base_stat) {
-      score_slot1 = score_slot1;
-      score_slot2 = score_slot2;
+    if (index < 7) {
+      if (stats.base_stat > poke2[index].base_stat) score_slot1++;
+      else if (stats.base_stat < poke2[index].base_stat) score_slot2++;
+      else if (stats.base_stat === poke2[index].base_stat) {
+        score_slot1 = score_slot1;
+        score_slot2 = score_slot2;
+      }
     }
   });
 
