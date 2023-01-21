@@ -10,6 +10,16 @@ function retornaTipos(array) {
   return html;
 }
 
+function verificaVoador(arrayTipos, arrayHabilidades, foto, fotoMobile) {
+  if (arrayTipos.includes('flying') || arrayHabilidades.includes('levitate')) {
+    foto.style.animation = 'flyingPoke 2s ease-in-out infinite';
+    fotoMobile.style.animation = 'flyingPoke 2s ease-in-out infinite';
+  } else {
+    foto.style.animation = '';
+    fotoMobile.style.animation = '';
+  }
+}
+
 function traduzNomeTipo(item) {
   if (item == 'electric') return 'Elétrico';
   if (item == 'normal') return 'Normal';
@@ -175,4 +185,5 @@ export default {
   imgFundoPorTipo,
   mudaCorTexto,
   updateVsModeFooter,
+  verificaVoador,
 };

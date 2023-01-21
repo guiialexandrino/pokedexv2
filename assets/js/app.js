@@ -1,5 +1,5 @@
 /* Importações */
-import Utils from './utils.js';
+import InterfaceUtils from './utils/interfaceUtils.js';
 
 /* Variaveis Globais */
 
@@ -29,7 +29,7 @@ const closeVsMode = document.querySelector('#closeVsMode');
 const corDeFundoDialogPoke = (tipoPokemon) => {
   document.documentElement.style.setProperty(
     '--pokeColor',
-    Utils.retornaCodigoCorDoTipo(tipoPokemon)
+    InterfaceUtils.retornaCodigoCorDoTipo(tipoPokemon)
   );
 };
 
@@ -164,7 +164,7 @@ async function getPokedex() {
 function createInterface() {
   // removeElements();
   setTimeout(() => (loading.style.display = 'none'), 300);
-  const utils = Utils.retornaMiniCards(__pokedex);
+  const utils = InterfaceUtils.retornaMiniCards(__pokedex);
   _maxContentCards.innerHTML = utils.html;
 
   // Adiciona eventos para mini card
@@ -174,11 +174,11 @@ function createInterface() {
     const number = document.querySelector(`#${poke.name}-number`);
     const addVsMode = document.querySelector(`#${poke.name}-vsMode`);
 
-    let cor = Utils.retornaCodigoCorDoTipo(poke.type);
+    let cor = InterfaceUtils.retornaCodigoCorDoTipo(poke.type);
 
     card.addEventListener('mouseenter', () => {
       card.style.background = cor;
-      if (Utils.mudaCorTexto(poke.type) === 'white') {
+      if (InterfaceUtils.mudaCorTexto(poke.type) === 'white') {
         info.classList.add('addWhiteColor');
         number.classList.add('addWhiteColor');
       }
@@ -232,7 +232,7 @@ function showInfoCard(poke, index, e) {
 }
 
 function loadPokeInfo(pokemon) {
-  removeElements();
+  // removeElements();
 
   _descricaoPoke.innerHTML = pokemon.flavor_text_entries[8].flavor_text.replace(
     /\n/g,
@@ -257,7 +257,7 @@ function loadPokeInfo(pokemon) {
   const tiposEncontrados = pokemon.types.map((item) => {
     return item.type.name;
   });
-  _tipoPoke.innerHTML = Utils.retornaTipos(tiposEncontrados);
+  _tipoPoke.innerHTML = InterfaceUtils.retornaTipos(tiposEncontrados);
 
   corDeFundoDialogPoke(tiposEncontrados[0]); // muda cor de fundo
 
@@ -268,7 +268,9 @@ function loadPokeInfo(pokemon) {
   const habilidadesEncontradas = pokemon.abilities.map((item) => {
     return item.ability.name;
   });
-  _habilidadePoke.innerHTML = Utils.retornaHabilidades(habilidadesEncontradas);
+  _habilidadePoke.innerHTML = InterfaceUtils.retornaHabilidades(
+    habilidadesEncontradas
+  );
 
   _hpPoke.value = pokemon.stats[0].base_stat;
   _ataquePoke.value = pokemon.stats[1].base_stat;
@@ -278,7 +280,13 @@ function loadPokeInfo(pokemon) {
   _velocidadePoke.value = pokemon.stats[5].base_stat;
 
   //verificar se o pokemon voa, inserir animação
-  verificaVoador(tiposEncontrados, habilidadesEncontradas);
+
+  InterfaceUtils.verificaVoador(
+    tiposEncontrados,
+    habilidadesEncontradas,
+    _fotoPoke,
+    _fotoPokeMobile
+  );
 
   /* tratamento para outliers */
   tratamentoOutliers();
@@ -319,16 +327,6 @@ function resizeWindow(e) {
   const event = { view: e.currentTarget };
   handleCloseInfo(event);
   handleCloseVsMode(event);
-}
-
-function verificaVoador(arrayTipos, arrayHabilidades) {
-  if (arrayTipos.includes('flying') || arrayHabilidades.includes('levitate')) {
-    _fotoPoke.style.animation = 'flyingPoke 2s ease-in-out infinite';
-    _fotoPokeMobile.style.animation = 'flyingPoke 2s ease-in-out infinite';
-  } else {
-    _fotoPoke.style.animation = '';
-    _fotoPokeMobile.style.animation = '';
-  }
 }
 
 function tratamentoOutliers() {
@@ -453,7 +451,7 @@ function addToComparePoke() {
 
     if (__pokesToCompare.length < 2) {
       __pokesToCompare.push(searchPoke);
-      const htmlUpdate = Utils.updateVsModeFooter(__pokesToCompare);
+      const htmlUpdate = InterfaceUtils.updateVsModeFooter(__pokesToCompare);
 
       slot1.innerHTML = htmlUpdate.poke1;
       document.querySelector('#slot1-del').addEventListener('click', (e) => {
@@ -474,7 +472,7 @@ function addToComparePoke() {
     if (__pokesToCompare.length === 2) {
       __pokesToCompare[0] = __pokesToCompare[1];
       __pokesToCompare[1] = searchPoke;
-      const htmlUpdate = Utils.updateVsModeFooter(__pokesToCompare);
+      const htmlUpdate = InterfaceUtils.updateVsModeFooter(__pokesToCompare);
 
       slot1.innerHTML = htmlUpdate.poke1;
       document.querySelector('#slot1-del').addEventListener('click', (e) => {
@@ -678,9 +676,9 @@ function refreshTypeAndColor() {
   });
 
   document.querySelector('#type_slot1').innerHTML =
-    Utils.retornaTipos(tiposPokeSlot1);
+    InterfaceUtils.retornaTipos(tiposPokeSlot1);
 
-  const corSlot1 = Utils.retornaCodigoCorDoTipo(tiposPokeSlot1[0]);
+  const corSlot1 = InterfaceUtils.retornaCodigoCorDoTipo(tiposPokeSlot1[0]);
   document.documentElement.style.setProperty('--slot1', corSlot1);
 
   //slot2
@@ -689,9 +687,9 @@ function refreshTypeAndColor() {
   });
 
   document.querySelector('#type_slot2').innerHTML =
-    Utils.retornaTipos(tiposPokeSlot2);
+    InterfaceUtils.retornaTipos(tiposPokeSlot2);
 
-  const corSlot2 = Utils.retornaCodigoCorDoTipo(tiposPokeSlot2[0]);
+  const corSlot2 = InterfaceUtils.retornaCodigoCorDoTipo(tiposPokeSlot2[0]);
   document.documentElement.style.setProperty('--slot2', corSlot2);
 
   //atualiza fundo degrade
@@ -707,13 +705,13 @@ function checkSlotsColorAreTheSame() {
     return item.type.name;
   });
 
-  const color1 = Utils.retornaCodigoCorDoTipo(tiposPokeSlot1[0]);
+  const color1 = InterfaceUtils.retornaCodigoCorDoTipo(tiposPokeSlot1[0]);
 
   const tiposPokeSlot2 = __pokesToCompare[1].types.map((item) => {
     return item.type.name;
   });
 
-  const color2 = Utils.retornaCodigoCorDoTipo(tiposPokeSlot2[0]);
+  const color2 = InterfaceUtils.retornaCodigoCorDoTipo(tiposPokeSlot2[0]);
 
   if (color1 === color2) {
     const newColor1 = color1.substring(0, color1.length - 4) + '0.3)';
@@ -743,20 +741,20 @@ function refreshStats(
 ) {
   // Atualiza label com valores
 
-  const slot1 = __pokesToCompare[0].stats[index].base_stat;
-  const slot2 = __pokesToCompare[1].stats[index].base_stat;
+  const firstSlot = __pokesToCompare[0].stats[index].base_stat;
+  const secondSlot = __pokesToCompare[1].stats[index].base_stat;
 
-  document.querySelector(slot1Label).innerHTML = slot1;
-  document.querySelector(slot2Label).innerHTML = slot2;
+  document.querySelector(slot1Label).innerHTML = firstSlot;
+  document.querySelector(slot2Label).innerHTML = secondSlot;
 
   // Atualiza o value do progress
 
-  document.querySelector(slot1Progress).value = slot1;
-  document.querySelector(slot2Progress).value = slot2;
+  document.querySelector(slot1Progress).value = firstSlot;
+  document.querySelector(slot2Progress).value = secondSlot;
 
   //Checa qual poke tem maior Stats
-  const maiorStats = slot1 > slot2 ? slot1 : slot2;
-  const menorStats = slot1 < slot2 ? slot1 : slot2;
+  const maiorStats = firstSlot > secondSlot ? firstSlot : secondSlot;
+  const menorStats = firstSlot < secondSlot ? firstSlot : secondSlot;
   const pokemaiorStatsName =
     __pokesToCompare[0].stats[index].base_stat === maiorStats
       ? __pokesToCompare[0].name
