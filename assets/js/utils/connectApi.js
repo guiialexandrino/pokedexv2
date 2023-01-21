@@ -1,4 +1,4 @@
-import { loading } from './reactiveElements.js';
+import { loading } from '../interface/reactiveElements.js';
 
 let __loadingProcess = 0;
 const __pokedexNumber = 151;

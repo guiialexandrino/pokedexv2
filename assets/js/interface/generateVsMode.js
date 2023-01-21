@@ -1,4 +1,4 @@
-import InterfaceUtils from './interfaceUtils.js';
+import InterfaceUtils from '../utils/interfaceUtils.js';
 
 let __pokesToCompare = [];
 

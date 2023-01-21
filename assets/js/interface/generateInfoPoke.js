@@ -1,4 +1,4 @@
-import InterfaceUtils from './interfaceUtils.js';
+import InterfaceUtils from '../utils/interfaceUtils.js';
 
 const _identificacaoPoke = document.querySelector('#num_nome');
 const _fotoPoke = document.querySelector('#foto');

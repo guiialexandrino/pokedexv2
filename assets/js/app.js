@@ -1,5 +1,5 @@
 /* Importações */
-import InterfaceUtils from './interface/interfaceUtils.js';
+import InterfaceUtils from './utils/interfaceUtils.js';
 import generateInfoPoke from './interface/generateInfoPoke.js';
 import generateVsMode from './interface/generateVsMode.js';
 import Api from './utils/connectApi.js';
