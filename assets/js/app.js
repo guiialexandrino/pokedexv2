@@ -2,15 +2,8 @@
 import InterfaceUtils from './utils/interfaceUtils.js';
 import generateInfoPoke from './interface/generateInfoPoke.js';
 import generateVsMode from './interface/generateVsMode.js';
+import Data from './data/data.js';
 import Api from './utils/connectApi.js';
-
-/* Variaveis Globais */
-
-let __pokedex = [];
-let __pokedexBackup = [];
-let __selectedPoke = {};
-let __pokesToCompare = [];
-let __dialogInfo = false;
 
 /* Elementos Reativos da página */
 
@@ -48,7 +41,7 @@ window.addEventListener('resize', resizeWindow);
 
 function cleanInput() {
   if (input.value) {
-    __pokedex = [...__pokedexBackup];
+    Data.set__pokedex([...Data.get__pokedexBackup()]);
     createInterface();
   }
   removeElements();
@@ -84,7 +77,7 @@ function resizeWindow(e) {
 
 function createInterface() {
   setTimeout(() => (loading.style.display = 'none'), 300);
-  const utils = InterfaceUtils.retornaMiniCards(__pokedex);
+  const utils = InterfaceUtils.retornaMiniCards(Data.get__pokedex());
   _maxContentCards.innerHTML = utils.html;
 
   // Adiciona eventos para mini card
@@ -112,7 +105,7 @@ function createInterface() {
     });
 
     addVsMode.addEventListener('click', () => {
-      __selectedPoke = { ...poke, id: index };
+      Data.set__selectedPoke({ ...poke, id: index });
       addToComparePoke();
     });
 
@@ -123,7 +116,7 @@ function createInterface() {
 }
 
 function showInfoCard(poke, index, e) {
-  __selectedPoke = { ...poke, id: index };
+  Data.set__selectedPoke({ ...poke, id: index });
 
   if (e.target.id.includes('vsMode')) return;
 
@@ -138,11 +131,11 @@ function showInfoCard(poke, index, e) {
     content.style.display = 'flex';
   }
 
-  const showPokeInfo = __pokedex[__selectedPoke.id];
+  const showPokeInfo = Data.get__pokedex()[Data.get__selectedPoke().id];
   generateInfoPoke.loadPokeInfo(showPokeInfo);
 
   //exibe dados ao clicar no card
-  __dialogInfo = true;
+  Data.set__dialogInfo(true);
   dialogPokeInfo.style.display = 'flex';
   header.style.transform = 'translateY(0px)';
 
@@ -152,7 +145,7 @@ function showInfoCard(poke, index, e) {
 }
 
 function handleCloseInfo(e) {
-  if (__dialogInfo) {
+  if (Data.get__dialogInfo()) {
     dialogPokeInfo.style.display = 'none';
     content.style.display = 'flex';
     body.style.overflowY = 'scroll';
@@ -162,13 +155,13 @@ function handleCloseInfo(e) {
     );
 
     if (e.view.outerWidth <= 1100) {
-      const el = document.querySelector(`#${__selectedPoke.name}`);
+      const el = document.querySelector(`#${Data.get__selectedPoke().name}`);
       el.scrollIntoView();
       window.scrollTo(0, window.scrollY - 100);
     }
 
     if (input.value) {
-      __pokedex = [...__pokedexBackup];
+      Data.set__pokedex([...Data.get__pokedexBackup()]);
       createInterface();
     }
 
@@ -178,7 +171,7 @@ function handleCloseInfo(e) {
       content.insertBefore(searchDiv, content.children[1]);
     }
 
-    __dialogInfo = false;
+    Data.set__dialogInfo(false);
   }
 }
 
@@ -186,13 +179,13 @@ function handleCloseInfo(e) {
 function addToComparePoke() {
   footer.style.transform = 'translateY(0px)';
 
-  const check = __pokesToCompare.filter((poke) => {
-    return poke.name === __selectedPoke.name;
+  const check = Data.get__pokesToCompare().filter((poke) => {
+    return poke.name === Data.get__selectedPoke().name;
   });
 
   if (check.length === 0) {
-    const searchPoke = __pokedexBackup.find((poke) => {
-      return poke.name === __selectedPoke.name;
+    const searchPoke = Data.get__pokedexBackup().find((poke) => {
+      return poke.name === Data.get__selectedPoke().name;
     });
 
     //adiciona o total de pontos - 6 (hp,def,atk,satk,sdef,spd)
@@ -204,9 +197,11 @@ function addToComparePoke() {
     });
     searchPoke.stats.push({ base_stat: totalPoints });
 
-    if (__pokesToCompare.length < 2) {
-      __pokesToCompare.push(searchPoke);
-      const htmlUpdate = InterfaceUtils.updateVsModeFooter(__pokesToCompare);
+    if (Data.get__pokesToCompare().length < 2) {
+      Data.get__pokesToCompare().push(searchPoke);
+      const htmlUpdate = InterfaceUtils.updateVsModeFooter(
+        Data.get__pokesToCompare()
+      );
 
       slot1.innerHTML = htmlUpdate.poke1;
       document.querySelector('#slot1-del').addEventListener('click', (e) => {
@@ -219,15 +214,18 @@ function addToComparePoke() {
           deletePokeOfSlot(e, 2);
         });
 
-      if (__pokesToCompare.length === 2) handleVsMode.disabled = false;
+      if (Data.get__pokesToCompare().length === 2)
+        handleVsMode.disabled = false;
 
       return;
     }
 
-    if (__pokesToCompare.length === 2) {
-      __pokesToCompare[0] = __pokesToCompare[1];
-      __pokesToCompare[1] = searchPoke;
-      const htmlUpdate = InterfaceUtils.updateVsModeFooter(__pokesToCompare);
+    if (Data.get__pokesToCompare().length === 2) {
+      Data.get__pokesToCompare()[0] = Data.get__pokesToCompare()[1];
+      Data.get__pokesToCompare()[1] = searchPoke;
+      const htmlUpdate = InterfaceUtils.updateVsModeFooter(
+        Data.get__pokesToCompare()
+      );
 
       slot1.innerHTML = htmlUpdate.poke1;
       document.querySelector('#slot1-del').addEventListener('click', (e) => {
@@ -244,13 +242,15 @@ function addToComparePoke() {
 
 function deletePokeOfSlot(e, slot) {
   const pokemon = e.target.parentNode.innerHTML.split(' <div');
-  __pokesToCompare = __pokesToCompare.filter((poke) => {
-    return poke.name !== pokemon[0];
-  });
+  Data.set__pokesToCompare(
+    Data.get__pokesToCompare().filter((poke) => {
+      return poke.name !== pokemon[0];
+    })
+  );
   if (slot === 1) slot1.innerHTML = 'Sem Pokémon';
   else slot2.innerHTML = 'Sem Pokémon';
 
-  if (__pokesToCompare.length === 0) {
+  if (Data.get__pokesToCompare().length === 0) {
     footer.style.transform = 'translateY(60px)';
   }
 
@@ -270,7 +270,7 @@ function vsMode(e) {
     content.style.display = 'flex';
   }
 
-  __dialogInfo = true;
+  Data.set__dialogInfo(true);
   dialogPokeInfo.style.display = 'none';
 
   // faz aparecer o nav header
@@ -284,7 +284,7 @@ function vsMode(e) {
     `rgba(23, 26, 51, 0.95)`
   );
 
-  generateVsMode.updateVsModeInterface(__pokesToCompare);
+  generateVsMode.updateVsModeInterface(Data.get__pokesToCompare());
 }
 
 function handleCloseVsMode(e) {
@@ -298,13 +298,20 @@ function handleCloseVsMode(e) {
     `rgba(23, 26, 51, 0.95)`
   );
 
-  if (e.view.outerWidth <= 1100 && __pokesToCompare.length > 0) {
-    if (__pokesToCompare[0].name) {
-      const el = document.querySelector(`#${__pokesToCompare[0].name}`);
+  if (e.view.outerWidth <= 1100 && Data.get__pokesToCompare.length > 0) {
+    if (Data.get__pokesToCompare()[0].name) {
+      const el = document.querySelector(
+        `#${Data.get__pokesToCompare()[0].name}`
+      );
       el.scrollIntoView();
       window.scrollTo(0, window.scrollY - 90);
-    } else if (!__pokesToCompare[0].name && __pokesToCompare[1].name) {
-      const el = document.querySelector(`#${__pokesToCompare[1].name}`);
+    } else if (
+      !Data.get__pokesToCompare()[0].name &&
+      Data.get__pokesToCompare()[1].name
+    ) {
+      const el = document.querySelector(
+        `#${Data.get__pokesToCompare()[1].name}`
+      );
       el.scrollIntoView();
       window.scrollTo(0, window.scrollY - 90);
     }
@@ -313,10 +320,10 @@ function handleCloseVsMode(e) {
 
 //Auto complete Methods
 function autoCompleteMethod() {
-  __pokedex = [...__pokedexBackup];
+  Data.set__pokedex([...Data.get__pokedexBackup()]);
 
   removeElements();
-  for (let i of __pokedex) {
+  for (let i of Data.get__pokedex()) {
     //convert input to lowercase and compare with each string
 
     if (
@@ -346,17 +353,17 @@ function autoCompleteMethod() {
 
 function displayNames(value, e) {
   input.value = value;
-  const showSearch = __pokedex.filter(
+  const showSearch = Data.get__pokedex.filter(
     (poke) =>
       poke.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
       input.value != ''
   );
-  __pokedex = showSearch;
+  Data.set__pokedex(showSearch);
 
   header.style.transform = 'translateY(-60px)';
   dialogVsMode.style.display = 'none';
 
-  showInfoCard(__pokedex[0], 0, e);
+  showInfoCard(Data.get__pokedex()[0], 0, e);
   removeElements();
 }
 
@@ -368,8 +375,8 @@ function removeElements() {
 }
 
 /* Chama Método Inicial para carregar lista de pokes*/
-
-__pokedex = await Api.getPokedex();
-__pokedexBackup = [...__pokedex]; // cópia - para resetar as buscas
+const data = await Api.getPokedex();
+Data.set__pokedex(data);
+Data.set__pokedexBackup([...Data.get__pokedex()]); // cópia - para resetar as buscas
 
 createInterface();

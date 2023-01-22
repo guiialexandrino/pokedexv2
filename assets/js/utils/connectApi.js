@@ -1,10 +1,11 @@
 import { loading } from '../interface/reactiveElements.js';
 
 let __loadingProcess = 0;
-const __pokedexNumber = 151;
+const __pokedexNumber = 10;
+const path = 'https://pokeapi.co/api/v2';
 
 async function getGeneralInfoPokes(id) {
-  return fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((response) => {
+  return fetch(`${path}/pokemon/${id}`).then((response) => {
     __loadingProcess++;
 
     document.querySelector('#loading-status').innerHTML = `${Math.round(
@@ -16,17 +17,15 @@ async function getGeneralInfoPokes(id) {
 }
 
 async function addExtraInfo(id) {
-  return fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then(
-    (response) => {
-      __loadingProcess++;
+  return fetch(`${path}/pokemon-species/${id}`).then((response) => {
+    __loadingProcess++;
 
-      document.querySelector('#loading-status').innerHTML = `${Math.round(
-        (__loadingProcess / (__pokedexNumber * 2)) * 100
-      )} %`;
+    document.querySelector('#loading-status').innerHTML = `${Math.round(
+      (__loadingProcess / (__pokedexNumber * 2)) * 100
+    )} %`;
 
-      return response.json();
-    }
-  );
+    return response.json();
+  });
 }
 
 async function getPokedex() {
