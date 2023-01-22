@@ -353,7 +353,7 @@ function autoCompleteMethod() {
 
 function displayNames(value, e) {
   input.value = value;
-  const showSearch = Data.get__pokedex.filter(
+  const showSearch = Data.get__pokedex().filter(
     (poke) =>
       poke.name.toLowerCase().startsWith(input.value.toLowerCase()) &&
       input.value != ''
