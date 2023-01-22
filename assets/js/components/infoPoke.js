@@ -21,7 +21,7 @@ export function showInfoCard(poke, index, e) {
     content.style.display = 'none';
     body.scrollIntoView();
   } else {
-    body.style.overflowY = 'hidden';
+    body.style.overflowY = 'scroll';
     body.style.overflowX = 'hidden';
     content.style.display = 'flex';
   }
@@ -41,32 +41,36 @@ export function showInfoCard(poke, index, e) {
 
 export function handleCloseInfo(e) {
   if (Data.get__dialogInfo()) {
-    dialogPokeInfo.style.display = 'none';
-    content.style.display = 'flex';
-    body.style.overflowY = 'scroll';
-    document.documentElement.style.setProperty(
-      '--mainColor',
-      `rgba(23, 26, 51, 0.95)`
-    );
+    dialogPokeInfo.style.animation = 'fadeOut 0.3s';
+    setTimeout(() => {
+      content.style.display = 'flex';
+      body.style.overflowY = 'scroll';
+      document.documentElement.style.setProperty(
+        '--mainColor',
+        `rgba(23, 26, 51, 0.95)`
+      );
 
-    if (e.view.outerWidth <= 1100) {
-      const el = document.querySelector(`#${Data.get__selectedPoke().name}`);
-      el.scrollIntoView();
-      window.scrollTo(0, window.scrollY - 100);
-    }
+      if (e.view.outerWidth <= 1100) {
+        const el = document.querySelector(`#${Data.get__selectedPoke().name}`);
+        el.scrollIntoView();
+        window.scrollTo(0, window.scrollY - 100);
+      }
 
-    if (input.value) {
-      Data.set__pokedex([...Data.get__pokedexBackup()]);
-      InitialInterface.createInterface();
-    }
+      if (input.value) {
+        Data.set__pokedex([...Data.get__pokedexBackup()]);
+        InitialInterface.createInterface();
+      }
 
-    if (window.pageYOffset < 220) {
-      header.style.transform = 'translateY(-60px)';
-      document.querySelector('.maxHeaderContent').appendChild(searchDiv);
-      content.insertBefore(searchDiv, content.children[1]);
-    }
+      if (window.pageYOffset < 220) {
+        header.style.transform = 'translateY(-60px)';
+        document.querySelector('.maxHeaderContent').appendChild(searchDiv);
+        content.insertBefore(searchDiv, content.children[1]);
+      }
 
-    Data.set__dialogInfo(false);
+      dialogPokeInfo.style.display = 'none';
+      dialogPokeInfo.style.animation = 'fadeIn 0.3s';
+      Data.set__dialogInfo(false);
+    }, 250);
   }
 }
 

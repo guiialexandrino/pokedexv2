@@ -105,7 +105,7 @@ function vsMode(e) {
     content.style.display = 'none';
     body.scrollIntoView();
   } else {
-    body.style.overflowY = 'hidden';
+    body.style.overflowY = 'scroll';
     body.style.overflowX = 'hidden';
     content.style.display = 'flex';
   }
@@ -129,34 +129,38 @@ function vsMode(e) {
 
 /*Método para fechar o vs mode */
 function handleCloseVsMode(e) {
-  dialogVsMode.style.display = 'none';
-  body.style.overflowY = 'scroll';
-  header.style.transform = 'translateY(-60px)';
-  content.style.display = 'flex';
-  content.insertBefore(searchDiv, content.children[1]);
-  document.documentElement.style.setProperty(
-    '--mainColor',
-    `rgba(23, 26, 51, 0.95)`
-  );
+  dialogVsMode.style.animation = 'fadeOut 0.3s';
+  setTimeout(() => {
+    header.style.transform = 'translateY(-60px)';
+    dialogVsMode.style.display = 'none';
+    dialogVsMode.style.animation = 'fadeIn 0.3s';
+    body.style.overflowY = 'scroll';
+    content.style.display = 'flex';
+    content.insertBefore(searchDiv, content.children[1]);
+    document.documentElement.style.setProperty(
+      '--mainColor',
+      `rgba(23, 26, 51, 0.95)`
+    );
 
-  if (e.view.outerWidth <= 1100 && Data.get__pokesToCompare.length > 0) {
-    if (Data.get__pokesToCompare()[0].name) {
-      const el = document.querySelector(
-        `#${Data.get__pokesToCompare()[0].name}`
-      );
-      el.scrollIntoView();
-      window.scrollTo(0, window.scrollY - 90);
-    } else if (
-      !Data.get__pokesToCompare()[0].name &&
-      Data.get__pokesToCompare()[1].name
-    ) {
-      const el = document.querySelector(
-        `#${Data.get__pokesToCompare()[1].name}`
-      );
-      el.scrollIntoView();
-      window.scrollTo(0, window.scrollY - 90);
+    if (e.view.outerWidth <= 1100 && Data.get__pokesToCompare.length > 0) {
+      if (Data.get__pokesToCompare()[0].name) {
+        const el = document.querySelector(
+          `#${Data.get__pokesToCompare()[0].name}`
+        );
+        el.scrollIntoView();
+        window.scrollTo(0, window.scrollY - 90);
+      } else if (
+        !Data.get__pokesToCompare()[0].name &&
+        Data.get__pokesToCompare()[1].name
+      ) {
+        const el = document.querySelector(
+          `#${Data.get__pokesToCompare()[1].name}`
+        );
+        el.scrollIntoView();
+        window.scrollTo(0, window.scrollY - 90);
+      }
     }
-  }
+  }, 250);
 }
 
 export default { addToComparePoke, vsMode, handleCloseVsMode };

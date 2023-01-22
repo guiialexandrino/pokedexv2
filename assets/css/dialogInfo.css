@@ -7,6 +7,7 @@
   background-color: var(--mainColor);
   z-index: 2001;
   margin: 0 auto;
+  animation: fadeIn 0.3s;
 }
 
 .dialogPokeInfo {
@@ -190,15 +191,6 @@ progress {
 
 progress::-webkit-progress-value {
   background: var(--pokeColor);
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
 progress::-webkit-progress-bar {
