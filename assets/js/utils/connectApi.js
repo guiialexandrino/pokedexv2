@@ -1,7 +1,7 @@
 import { loading } from '../interface/reactiveElements.js';
 
 let __loadingProcess = 0;
-const __pokedexNumber = 10;
+const __pokedexNumber = 151;
 const path = 'https://pokeapi.co/api/v2';
 
 async function getGeneralInfoPokes(id) {

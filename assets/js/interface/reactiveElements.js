@@ -1,3 +1,8 @@
+import InfoPoke from '../components/infoPoke.js';
+import VsMode from '../components/vsMode.js';
+import AutoComplete from '../components/autoComplete.js';
+import ResizeWindow from '../utils/resizeWindow.js';
+
 /* Elementos Reativos da página */
 
 export const body = document.querySelector('body');
@@ -18,3 +23,14 @@ export const closeVsMode = document.querySelector('#closeVsMode');
 export const _maxContentCards = document.querySelector('#maxContentCards');
 export const slot1 = document.querySelector('#slot1');
 export const slot2 = document.querySelector('#slot2');
+
+/* Adiciona Eventos */
+
+closeInfoButton.addEventListener('click', InfoPoke.handleCloseInfo);
+addToCompare.addEventListener('click', VsMode.addToComparePoke);
+handleVsMode.addEventListener('click', VsMode.vsMode);
+closeVsMode.addEventListener('click', VsMode.handleCloseVsMode);
+input.addEventListener('keyup', AutoComplete.autoCompleteMethod);
+body.addEventListener('click', ResizeWindow.cleanInput);
+window.addEventListener('scroll', ResizeWindow.scrolling);
+window.addEventListener('resize', ResizeWindow.resizeWindow);
